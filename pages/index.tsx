@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { Table, Form, Input, Button, message } from "antd";
 import AV from "leancloud-storage";
 import EditModal from "./EditModal";
+interface Record {
+  id: string;
+}
 export default function Home() {
   const [form] = Form.useForm();
   const [dataList, setDataList] = useState([]);
@@ -25,7 +28,7 @@ export default function Home() {
     {
       dataIndex: "opt",
       title: "操作",
-      render: (text, { id }) => (
+      render: (text: any, { id }: Record) => (
         <>
           <Button type="link" onClick={() => handleEdit(id)}>
             编辑
@@ -37,17 +40,14 @@ export default function Home() {
       ),
     },
   ];
-  const handleDelete = (id) => {
-    const todo = AV.Object.createWithoutData(
-      "TestObject",
-      id
-    );
+  const handleDelete = (id: string) => {
+    const todo = AV.Object.createWithoutData("TestObject", id);
     todo.destroy();
-    message.success('删除成功')
-    handleLoadList()
+    message.success("删除成功");
+    handleLoadList();
   };
 
-  const handleEdit = (id) => {
+  const handleEdit = (id: string) => {
     setVisible(true);
     setRecordId(id);
   };
@@ -62,8 +62,8 @@ export default function Home() {
   useEffect(() => {
     handleLoadList();
   }, []);
-  const formatData = (todoData) => {
-    const data = todoData.map((i) => {
+  const formatData = (todoData:any) => {
+    const data = todoData.map((i: any) => {
       return {
         ...i._serverData,
         id: i.id,
@@ -71,7 +71,7 @@ export default function Home() {
     });
     return data;
   };
-  const handleSearch = (values) => {
+  const handleSearch = (values: any) => {
     form.validateFields().then(() => {
       const query = new AV.Query("TestObject");
       if (values.name) {

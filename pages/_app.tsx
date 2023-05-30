@@ -1,12 +1,15 @@
-import { useEffect } from 'react';
-import AV from 'leancloud-storage';
-<script src="//code.bdstatic.com/npm/leancloud-storage@4.13.2/dist/av-min.js"></script>
-function MyApp({ Component, pageProps }) {
+import { useEffect } from "react";
+import AV from "leancloud-storage";
+interface Iprops {
+  Component: any;
+  pageProps: any;
+}
+function MyApp({ Component, pageProps }: Iprops) {
   useEffect(() => {
     AV.init({
-      appId: 'a1NEpQvULyFOQfPJkIpZ9cvp-MdYXbMMI',
-      appKey: 'kw6ZZPF72Uy3mMAWLUSzhFno',
-      serverURL: 'https://a1nepqvu.api.lncldglobal.com',
+      appId: "a1NEpQvULyFOQfPJkIpZ9cvp-MdYXbMMI",
+      appKey: "kw6ZZPF72Uy3mMAWLUSzhFno",
+      serverURL: "https://a1nepqvu.api.lncldglobal.com",
     });
   }, []);
 

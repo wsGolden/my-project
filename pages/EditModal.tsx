@@ -1,19 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Form, Input, Button, message } from "antd";
 import AV from "leancloud-storage";
+interface Iprops {
+  onSubmit: () => void
+  onCancel:() => void
+  recordId: string
+}
 
-function EditModal({ onSubmit, onCancel, recordId }) {
+interface resDta {
+  _serverData: {}
+}
+
+function EditModal({ onSubmit, onCancel, recordId }: Iprops) {
   const [form] = Form.useForm();
   useEffect(() => {
     if (recordId) {
       const query = new AV.Query("TestObject");
-      query.get(recordId).then((res) => {
+      query.get(recordId).then((res:any) => {
         console.log(res, 123);
         form.setFieldsValue({ ...res._serverData });
       });
     }
   }, [recordId]);
-  const handleSubmit = (values) => {
+  const handleSubmit = (values: any) => {
     // 创建 TestObject 表对象，并设置 name 字段
     const TestObject = AV.Object.extend("TestObject");
     const testObject = new TestObject();
