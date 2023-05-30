@@ -1,6 +1,16 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import { useEffect } from 'react';
+import AV from 'leancloud-storage';
+<script src="//code.bdstatic.com/npm/leancloud-storage@4.13.2/dist/av-min.js"></script>
+function MyApp({ Component, pageProps }) {
+  useEffect(() => {
+    AV.init({
+      appId: 'a1NEpQvULyFOQfPJkIpZ9cvp-MdYXbMMI',
+      appKey: 'kw6ZZPF72Uy3mMAWLUSzhFno',
+      serverURL: 'https://a1nepqvu.api.lncldglobal.com',
+    });
+  }, []);
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return <Component {...pageProps} />;
 }
+
+export default MyApp;
