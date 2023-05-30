@@ -7,9 +7,9 @@ interface Iprops {
 function MyApp({ Component, pageProps }: Iprops) {
   useEffect(() => {
     AV.init({
-      appId: "a1NEpQvULyFOQfPJkIpZ9cvp-MdYXbMMI",
-      appKey: "kw6ZZPF72Uy3mMAWLUSzhFno",
-      serverURL: "https://a1nepqvu.api.lncldglobal.com",
+      appId: "NP1A7eGKYLPnEUDo0FYruAkS-gzGzoHsz",
+      appKey: "MspnBbTyvLYxvvXZELMx4bcm",
+      serverURL: "https://np1a7egk.lc-cn-n1-shared.com",
     });
   }, []);
 

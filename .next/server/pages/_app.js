@@ -23,9 +23,9 @@ __webpack_require__.r(__webpack_exports__);
 function MyApp({ Component , pageProps  }) {
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
         leancloud_storage__WEBPACK_IMPORTED_MODULE_2___default().init({
-            appId: "a1NEpQvULyFOQfPJkIpZ9cvp-MdYXbMMI",
-            appKey: "kw6ZZPF72Uy3mMAWLUSzhFno",
-            serverURL: "https://a1nepqvu.api.lncldglobal.com"
+            appId: "NP1A7eGKYLPnEUDo0FYruAkS-gzGzoHsz",
+            appKey: "MspnBbTyvLYxvvXZELMx4bcm",
+            serverURL: "https://np1a7egk.lc-cn-n1-shared.com"
         });
     }, []);
     return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(Component, {
