@@ -54,10 +54,11 @@ export default function Home() {
   const handleLoadList = () => {
     setTimeout(() => {
       const query = new AV.Query("TestObject");
+      query.descending('createdAt')
       query.find().then((todo) => {
         setDataList(formatData(todo));
       });
-    }, 0);
+    }, 50);
   };
   useEffect(() => {
     handleLoadList();
