@@ -1,25 +1,21 @@
-const { parse } = require('url');
-const next = require('next');
 const express = require('express');
-const server = express();
-const NODE_PORT = process.env.NODE_PORT;
+const next = require('next');
+const compression = require('compression');
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
+const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
+  const server = express();
+  server.use(compression()); // 使用 compression 中间件
+
   server.get('*', (req, res) => {
-
-    const parsedUrl = parse(req.url, true);
-    const { pathname, query } = parsedUrl;
-
-    // 主页
-    if (pathname === '/wangshuo/index') {
-      return app.render(req, res, '/', query);
-    }
-   // ... 其它页面
-    app.render(req, res, '/404', query);
-  })
-
-  server.listen(NODE_PORT, () => console.log('Example app listening on port ' + NODE_PORT));
-})
+    return handle(req, res);
+  });
+  console.log(dev, 87654)
+  server.listen(3000, err => {
+    if (err) throw err;
+    console.log('> Ready on http://localhost:3000');
+  });
+});

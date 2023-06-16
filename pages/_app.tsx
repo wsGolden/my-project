@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import AV from "leancloud-storage";
+import '../styles/About.css'
 interface Iprops {
   Component: any;
   pageProps: any;
