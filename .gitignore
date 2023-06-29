@@ -34,3 +34,6 @@ yarn-error.log*
 next-env.d.ts
 .npmrc
 /.next
+app/view/.next
+app/view/.next/cache
+run

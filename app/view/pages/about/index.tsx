@@ -1,13 +1,18 @@
+import { Alert } from "antd";
 import React, { useEffect } from "react";
-function gameBoard() {
+// import './css/About.less'
+import styles from "./index.module.scss";
+import Header from "@/components/Header";
+
+function GameBoard() {
   // 定义游戏板
-  var board = [
+  let board = [
     [0, 2, 0, 0],
     [0, 0, 4, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
   ];
-  var tileColors = {
+  var tileColors: any = {
     2: "tile-2",
     4: "tile-4",
     8: "tile-8",
@@ -30,13 +35,13 @@ function gameBoard() {
     var gameBoard = document.querySelector(".game-board");
     for (var i = 0; i < board.length; i++) {
       for (var j = 0; j < board[i].length; j++) {
-        var tile = document.createElement("div");
+        var tile: any = document.createElement("div");
         var value = board[i][j];
-        tile.className = "game-tile";
+        tile.className = styles["game-tile"];
         tile.id = "tile-" + i + "-" + j;
         // 添加数字和对应的CSS类
-        tile.classList.add("tile");
-        tile.classList.add(tileColors[board[i][j]]);
+        tile.classList.add(styles["tile"]);
+        tile.classList.add(styles[tileColors[board[i][j]]]);
         tile.innerText = board[i][j] === 0 ? "" : board[i][j];
         gameBoard.appendChild(tile);
       }
@@ -45,65 +50,54 @@ function gameBoard() {
 
   // 更新游戏板UI
   const updateBoardUI = () => {
-    console.log(764532);
     for (var i = 0; i < board.length; i++) {
       for (var j = 0; j < board[i].length; j++) {
-        var tile = document.getElementById("tile-" + i + "-" + j);
-        tile.classList.add("tile");
-        tile.classList.add(tileColors[board[i][j]]);
+        var tile: any = document.getElementById("tile-" + i + "-" + j);
+        tile.classList.add(styles["tile"]);
+        tile.classList.add(styles[tileColors[board[i][j]]]);
         tile.innerText = board[i][j] === 0 ? "" : board[i][j];
       }
     }
   };
 
-  // 检查游戏是否结束
-  const isGameOver = () => {
-    // 检查是否满了
-    // 检查是否达到目标分数
-    // 检查是否还能移动
-    // 检查是否还有空白单元格
-    for (var i = 0; i < board.length; i++) {
-      for (var j = 0; j < board[i].length; j++) {
-        if (board[i][j] === 0) {
+  const hasEmptyCell = (board: any) => {
+    for (var row = 0; row < board.length; row++) {
+      for (var col = 0; col < board[row].length; col++) {
+        if (board[row][col] === 0) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
+  const isGameOver = (board: any) => {
+    // 判断游戏板上是否还有空格
+    for (var row = 0; row < board.length; row++) {
+      for (var col = 0; col < board[0].length; col++) {
+        if (board[row][col] === 0) {
           return false;
         }
       }
     }
 
-    // 检查是否有相邻的方块相同
-    for (var i = 0; i < board.length; i++) {
-      for (var j = 0; j < board[i].length; j++) {
+    // 检查相邻的方块是否有相同的数字
+    for (var row = 0; row < board.length - 1; row++) {
+      for (var col = 0; col < board[0].length - 1; col++) {
         if (
-          (j < board[i].length - 1 && board[i][j] === board[i][j + 1]) ||
-          (i < board.length - 1 && board[i][j] === board[i + 1][j])
+          board[row][col] === board[row + 1][col] ||
+          board[row][col] === board[row][col + 1]
         ) {
           return false;
         }
       }
     }
-
-    // 检查是否达到目标分数
-    var targetScore = 8192; // 假设目标分数为2048
-    for (var i = 0; i < board.length; i++) {
-      for (var j = 0; j < board[i].length; j++) {
-        if (board[i][j] >= targetScore) {
-          return true;
-        }
-      }
-    }
-    for (var i = 0; i < board.length; i++) {
-      for (var j = 0; j < board[i].length; j++) {
-        if (board[i][j] === 0) {
-          return true;
-        }
-      }
-    }
-    console.log(546576)
-    return false; // 如果以上条件都不满足，则游戏未结束。
+    // 所有相邻方块的数字都不同，游戏结束
+    return true;
   };
 
   // 移动方块并合并相邻的相同方块
-  const move = (direction) => {
+  const move = (direction: any) => {
     // 根据方向移动所有方块
     // 合并相邻的相同方块
     // 在空白随机位置生成新方块
@@ -167,20 +161,13 @@ function gameBoard() {
 
       case "up":
         for (var i = 1; i < board.length; i++) {
-          console.log(board, 888);
-
           for (var j = 0; j < board[i].length; j++) {
-            console.log(8765, board[i][j]);
-
             if (board[i][j] !== 0) {
-              console.log(76);
-
               for (var k = i - 1; k >= 0; k--) {
                 if (board[k][j] === 0) {
                   // 如果该位置为空白，则进行移动
                   board[k][j] = board[i][j];
                   board[i][j] = 0;
-                  console.log(7717);
 
                   moved = true;
                 } else if (board[k][j] === board[i][j]) {
@@ -188,11 +175,9 @@ function gameBoard() {
                   board[k][j] *= 2;
                   board[i][j] = 0;
                   moved = true;
-                  console.log(77317);
 
                   break;
                 } else {
-                  console.log(7777433);
                   // 如果该位置为其他方块，则不能继续移动
                   break;
                 }
@@ -200,7 +185,6 @@ function gameBoard() {
             }
           }
         }
-        console.log(777);
         break;
 
       case "down":
@@ -229,12 +213,11 @@ function gameBoard() {
         }
         break;
     }
-    console.log(moved, 12121);
     // 在空白随机位置生成新方块
     if (moved) {
       var emptyTiles;
       if (moved) {
-        var emptyTiles = [];
+        var emptyTiles: any = [];
         for (var i = 0; i < board.length; i++) {
           for (var j = 0; j < board[i].length; j++) {
             if (board[i][j] === 0) {
@@ -248,13 +231,17 @@ function gameBoard() {
         board[emptyTiles[randomIndex][0]][emptyTiles[randomIndex][1]] =
           tileValue;
       }
-      console.log(878564);
       // 更新游戏板UI
       updateBoardUI();
 
       // 检查是否游戏结束
-      if (isGameOver()) {
-        console.log("Game over!");
+      if (isGameOver(board)) {
+        board = [
+          [0, 2, 0, 0],
+          [0, 0, 4, 0],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0],
+        ];
       }
     }
   };
@@ -263,13 +250,11 @@ function gameBoard() {
     createBoardUI();
     // 添加事件监听器，以便在玩家按下方向键时触发游戏逻辑
     document.addEventListener("keydown", function (event) {
-      console.log(76543111, event, event.keyCode);
       switch (event.keyCode) {
         case 37: // Left arrow
           move("left");
           break;
         case 38: // Up arrow
-          console.log(87654);
           move("up");
           break;
         case 39: // Right arrow
@@ -281,6 +266,11 @@ function gameBoard() {
       }
     });
   }, []);
-  return <div className="game-board"></div>;
+  return (
+    <>
+      <Header />
+      <div className={`${styles["game-board"]} game-board`} />;
+    </>
+  );
 }
-export default gameBoard;
+export default GameBoard;

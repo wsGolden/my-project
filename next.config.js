@@ -1,29 +1,17 @@
+const path = require('path');
 
-
-module.exports = {
-  // ...
-  async headers() {
-    console.log(7654)
-    return [
-      {
-        // 匹配所有 .js 文件
-        source: '/:path*',
-        // 设置 Cache-Control 和 Expires 标头
-        headers: [
-          {
-            key: 'x-custom-header',
-            value: 'my custom header value',
-          },
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-          {
-            key: 'Expires',
-            value: new Date(Date.now() + 31536000000).toUTCString(),
-          },
-        ],
-      },
-    ];
+const withLess = require('next-with-less');
+const withTM = require('next-transpile-modules')(['antd']);
+module.exports = withTM(withLess({
+  /* 这里是其他的配置选项 */
+  lessLoaderOptions: {
+    /* 这里是你的 less-loader 选项 */
   },
-}
+  webpack: (config, options) => {
+    
+    config.resolve.alias['@'] = path.resolve(__dirname, 'app/view');
+    config.resolve.alias['@pages'] = path.resolve(__dirname, 'app/view/pages/*');
+    config.resolve.alias['@view/utils'] = path.resolve(__dirname, 'app/view/common/utils');
+    return config
+  }
+}))

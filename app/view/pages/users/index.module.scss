@@ -1,0 +1,96 @@
+.game-board {
+  width: 320px;
+  height: 320px;
+  margin: auto;
+  border: 1px solid black;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
+}
+
+.game-tile {
+  width: 70px;
+  height: 70px;
+  background-color: #EEE4DA;
+  margin: 4px;
+  color: white;
+  font-weight: bold;
+  font-size: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tile-2 {
+  background-color: #EEE4DA;
+  color: #776E65;
+}
+
+.tile-4 {
+  background-color: #EDE0C8;
+  color: #776E65;
+}
+
+.tile-8 {
+  background-color: #F2B179;
+  color: white;
+}
+
+.tile-16 {
+  background-color: #F59563;
+  color: white;
+}
+
+.tile-32 {
+  background-color: #F67C5F;
+  color: white;
+}
+
+.tile-64 {
+  background-color: #F65E3B;
+  color: white;
+}
+
+.tile-128 {
+  background-color: #EDCF72;
+  color: white;
+}
+
+.tile-256 {
+  background-color: #EDCC61;
+  color: white;
+}
+
+.tile-512 {
+  background-color: #EDC850;
+  color: white;
+}
+
+.tile-1024 {
+  background-color: #EDC53F;
+  color: white;
+}
+
+.tile-2048 {
+  background-color: #EDC22E;
+  color: white;
+}
+
+.tile-4096 {
+  background-color: #3c3a32;
+  color: white;
+}
+
+.tile-8192 {
+  background-color: #0000ff;
+  color: white;
+}
+
+.tile-16384 {
+  background-color: #00ffff;
+  color: white;
+}
+
+.tile-32768 {
+  background-color: #800080;
+  color: white;
+}
