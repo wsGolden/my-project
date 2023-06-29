@@ -11,8 +11,8 @@
     "analyze": "ANALYZE=true next build && next bundle-analyzer",
     "next:build": "next build app/view",
     "next:dev": "next app/view",
-    "server:online": "node ./scripts/beforeStart.js -e ENV_QA && EGG_SERVER_ENV=dev egg-bin dev",
-    "build:online": "concurrently \"node ./scripts/beforeStart.js -e ENV_QA && EGG_SERVER_ENV=dev egg-bin dev\" \"next build app/view\""
+    "server:online": "node ./scripts/beforeStart.js -e ENV_ONLINE && EGG_SERVER_ENV=online egg-bin dev",
+    "build:online": "concurrently \"node ./scripts/beforeStart.js -e ENV__ONLINE && EGG_SERVER_ENV=dev egg-bin dev\" \"next build app/view\""
   },
   "engines": {
     "node": ">=16.0.0"
