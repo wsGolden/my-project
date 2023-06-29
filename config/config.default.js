@@ -39,7 +39,7 @@ module.exports = (appInfo) => {
  
   // 设置cors配置
   config.cors = {
-    origin: proces.env.EGG_SERVER_ENV === 'dev' ? 'http://localhost:3000' : 'http://123.57.88.38',
+    origin: process.env.EGG_SERVER_ENV === 'dev' ? 'http://localhost:3000' : 'http://123.57.88.38',
     allowMethods: 'GET,POST',
     credentials: true,
   };
