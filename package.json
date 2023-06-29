@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"node ./scripts/beforeStart.js -e ENV_QA && EGG_SERVER_ENV=dev egg-bin dev --watch\" \"next app/view\"",
+    "dev": "concurrently \"node ./scripts/beforeStart.js -e ENV_QA && EGG_SERVER_ENV=dev egg-bin dev\" \"next app/view\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -11,7 +11,8 @@
     "analyze": "ANALYZE=true next build && next bundle-analyzer",
     "next:build": "next build app/view",
     "next:dev": "next app/view",
-    "build:online": "concurrently \"node ./scripts/beforeStart.js -e ENV_QA && EGG_SERVER_ENV=dev egg-bin dev --watch\" \"next build app/view\""
+    "server:online": "node ./scripts/beforeStart.js -e ENV_QA && EGG_SERVER_ENV=dev egg-bin dev",
+    "build:online": "concurrently \"node ./scripts/beforeStart.js -e ENV_QA && EGG_SERVER_ENV=dev egg-bin dev\" \"next build app/view\""
   },
   "engines": {
     "node": ">=16.0.0"
