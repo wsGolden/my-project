@@ -69,7 +69,7 @@ const axiosInstance = axios.create({
 })
 
 axiosInstance.interceptors.request.use(
-  (config: AxiosRequestConfig): AxiosRequestConfig => {
+  (config) => {
     if (config.data instanceof FormData) {
       config.headers['Content-Type'] = 'multipart/form-data'
     } else {

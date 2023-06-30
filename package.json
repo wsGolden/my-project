@@ -13,7 +13,7 @@
     "build": "npm run next:build && rm -rf app/view/.next/cache",
     "next:build": "next build app/view",
     "next:dev": "next app/view",
-    "next:online": "next:build && pm2 start ecosystem.config.js"
+    "next:online": "npm run build && pm2 start ecosystem.config.js"
   },
   "engines": {
     "node": ">=16.0.0"

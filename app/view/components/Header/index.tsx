@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 
 import styles from "./index.module.scss";
 
-export default () => {
+const Header = () => {
   const router = useRouter();
 
   // 获取当前路由信息
@@ -47,3 +47,5 @@ export default () => {
     />
   );
 };
+
+export default Header;
