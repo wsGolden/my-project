@@ -1,18 +1,19 @@
 {
-  "name": "my-project",
+  "name": "ws-project",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"node ./scripts/beforeStart.js -e ENV_QA && EGG_SERVER_ENV=dev egg-bin dev\" \"next app/view\"",
-    "build": "next build",
-    "start": "next start",
+    "start": "npm run start:online",
+    "start:online": "node ./scripts/beforeStart.js && egg-scripts start --daemon --workers=1 --title=ws-project",
+    "stop": "egg-scripts stop --title=ws-project",
+    "dev": "node ./scripts/beforeStart.js -e ENV_QA && EGG_SERVER_ENV=dev egg-bin dev",
     "lint": "next lint",
     "prod": "next build && next start",
     "analyze": "ANALYZE=true next build && next bundle-analyzer",
+    "build": "npm run next:build && rm -rf app/view/.next/cache",
     "next:build": "next build app/view",
     "next:dev": "next app/view",
-    "server:online": "node ./scripts/beforeStart.js -e ENV_ONLINE && EGG_SERVER_ENV=online egg-bin dev",
-    "build:online": "concurrently \"node ./scripts/beforeStart.js -e ENV__ONLINE && EGG_SERVER_ENV=dev egg-bin dev\" \"next build app/view\""
+    "next:online": "next:build && pm2 start ecosystem.config.js"
   },
   "engines": {
     "node": ">=16.0.0"
