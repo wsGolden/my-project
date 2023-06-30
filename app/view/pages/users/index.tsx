@@ -3,7 +3,7 @@ import { Table, Form, Input, Button, message } from "antd";
 import moment from "moment";
 import useAjaxTable from "../../hooks/useAjaxTable";
 import EditModal from "./EditModal";
-import { removeUser } from "./services/api";
+import { removeUser } from "../../services/users/api";
 import Header from "@/components/Header";
 interface Record {
   _id: string;

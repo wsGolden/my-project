@@ -1,5 +1,5 @@
-/** 业绩管理 ajax */
-import axios, { axiosPost } from "../../../common/utils/axios";
+/** ajax */
+import axios, { axiosPost } from "../../common/utils/axios";
 
 export const addUser = (params: { userName: string; nickName: string }) => {
   return axiosPost("/api/user/add", params);
@@ -20,3 +20,5 @@ export const updateUser = (params: {
 }) => {
   return axiosPost("/api/user/update", params);
 };
+
+export default { updateUser };

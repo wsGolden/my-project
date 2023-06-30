@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Modal, Form, Input } from "antd";
-import { addUser, updateUser, getUserDetail } from "./services/api";
+import { addUser, updateUser, getUserDetail } from "../../services/users/api";
 interface Iprops {
   onSubmit: () => void;
   onCancel: () => void;
