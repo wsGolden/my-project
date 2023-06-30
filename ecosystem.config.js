@@ -7,7 +7,8 @@ module.exports = {
     args: 'start', // 启动参数
     exec_mode: 'cluster', // 使用集群模式
     instances: 'max', // 根据 CPU 核心数量启动相应数量的实例
-    autorestart: true, // 自动重启进程
+    autorestart: true, // 自动重启进程,
+    log_file: './logs/app.log', // 日志文件路径
     env: {
       NODE_ENV: 'production',
       NODE_PORT: 8080,
