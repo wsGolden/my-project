@@ -58,9 +58,8 @@ const findErrorCode = (code: string) => codeList.find((codeItem) => codeItem.cod
 
 // 是否命中错误信息提示code
 let isHandleMsgCode = false
-console.log(process.env.NODE_ENV, 312312)
 const axiosInstance = axios.create({
-  baseURL: process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:7001' : 'http://123.57.88.38',
+  baseURL: process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:7001' : 'http://123.57.88.38:7001',
   withCredentials: true,
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded',
