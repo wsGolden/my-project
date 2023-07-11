@@ -26,7 +26,6 @@
     "@types/react-dom": "18.2.4",
     "axios": "^1.4.0",
     "compression": "^1.7.4",
-    "D": "^1.0.0",
     "egg": "^2.29.1",
     "egg-cors": "^2.2.3",
     "egg-logrotator-forward": "^3.1.0",
@@ -48,7 +47,6 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "sass": "^1.63.5",
-    "sass-loader": "^13.3.2",
     "typescript": "5.0.4",
     "url-loader": "^4.1.1",
     "uuid": "^9.0.0"
