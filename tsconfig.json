@@ -15,14 +15,16 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": ".",
+    "baseUrl": "./app",
     "paths": {
-      "@/*": ["*"],
-      "@utils/*": ["app/utils/*"],
-      "@pages/*": ["app/view/pages/*"],
-      "@common/*": ["app/view/common/*"],
-
-
+      "@root/*": ["*"],
+      "@*": ["view/*"],
+      "@common/*": ["view/common/*"],
+      "@components/*": ["view/components/*"],
+      "@hooks/*": ["view/hooks/*"],
+      "@pages/*": ["view/pages/*"],
+      "@views/*": ["view/views/*"],
+      "@static/*": ["view/static/*"],
     },
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

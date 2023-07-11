@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-
+// import '@/common/css/index.module.scss';
+// import '../styles/global.scss'
 interface Iprops {
   Component: any;
   pageProps: any;

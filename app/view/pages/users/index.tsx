@@ -4,7 +4,7 @@ import moment from "moment";
 import useAjaxTable from "../../hooks/useAjaxTable";
 import EditModal from "./EditModal";
 import { removeUser } from "../../services/users/api";
-import Header from "@/components/Header";
+import Header from "@/components/ConfigPageHeader";
 interface Record {
   _id: string;
 }
