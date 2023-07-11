@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+import Head from 'next/head';
+
 // import '@/common/css/index.module.scss';
 // import '../styles/global.scss'
 interface Iprops {
@@ -6,7 +8,9 @@ interface Iprops {
   pageProps: any;
 }
 function MyApp({ Component, pageProps }: Iprops) {
-  return <Component {...pageProps} />;
+  return <><Head>
+    <title>Anyway Blob</title>
+  </Head><Component {...pageProps} /></>;
 }
 
 export default MyApp;

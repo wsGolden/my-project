@@ -10,19 +10,17 @@ export default function Header() {
     <div className={styles["header-box"]}>
       <div className={styles["title-box"]}>
         <Code width="16" height="16" />
-        <div className={styles["title"]}>Anyway Coder</div>
+        <Link href="/" className={styles["title"]}>Anyway Coder</Link>
       </div>
       <Space className={styles.menubox}>
         <Space className={styles.menu}>
           <MenuOutlined />
-          <div>分类</div>
+          <a>分类</a>
         </Space>
-        <a href="https://github.com/wsGolden" target="_blank">
           <Space className={styles.menu}>
             <GithubOutlined />
-            <span>源代码</span>
+            <a href="https://github.com/wsGolden" target="_blank">源代码</a>
           </Space>
-        </a>
       </Space>
     </div>
   );

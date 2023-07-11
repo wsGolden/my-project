@@ -15,12 +15,13 @@
   }
 
   a {
-    color: #0070f3;
+    color: $text-color;
     text-decoration: none;
   }
 
   a:hover {
-    text-decoration: underline;
+    text-decoration: none;
+    opacity: .8;
   }
 
   img {
