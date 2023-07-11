@@ -1,0 +1,22 @@
+.header-box {
+  display: flex;
+  justify-content: space-between;
+  .title-box {
+    display: flex;
+    align-items: center;
+    .title {
+      font-size: 16px;
+      margin-left: 10px;
+      color: $text-color;
+    }
+  }
+  .menubox {
+    display: flex;
+
+    .menu {
+    color: $text-color;
+
+      margin-left: 10px;
+    }
+  }
+}
