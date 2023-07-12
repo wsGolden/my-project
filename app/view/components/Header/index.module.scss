@@ -1,20 +1,38 @@
 .header-box {
+  height: 60px;
+  align-items: center;
+  width: 1200px;
+  position: fixed;
+  top: 8px;
   display: flex;
   justify-content: space-between;
   .title-box {
     display: flex;
     align-items: center;
-    .title {
-      font-size: 16px;
-      margin-left: 10px;
-      color: $text-color;
+    .title-cont-box {
+      display: flex;
+      align-items: center;
+      padding: 3px 4px 3px 3px;
+      background: $text-color;
+      color: #fff;
+      font-size: 12px;
+      font-family: monospace;
+      .title-any {
+        margin-left: 5px;
+      }
+      .title-coder {
+        margin-left: 5px;
+        padding: 2px 5px;
+        border-radius: 3px;
+        background-color: skyblue;
+      }
     }
   }
   .menubox {
     display: flex;
 
     .menu {
-    color: $text-color;
+      color: $text-color;
 
       margin-left: 10px;
     }
