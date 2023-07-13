@@ -21,11 +21,29 @@
 
   a:hover {
     text-decoration: none;
-    opacity: .8;
+    opacity: 0.8;
   }
 
   img {
     max-width: 100%;
     display: block;
   }
+}
+@mixin ellipsis($lines) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+}
+
+.ellipsis1 {
+  @include ellipsis(1);
+}
+
+.ellipsis2 {
+  @include ellipsis(2);
+}
+.ellipsis3 {
+  @include ellipsis(3);
 }

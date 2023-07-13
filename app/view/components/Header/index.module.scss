@@ -3,9 +3,11 @@
   align-items: center;
   width: 1200px;
   position: fixed;
-  top: 8px;
+  top: 0px;
   display: flex;
   justify-content: space-between;
+  z-index: 1;
+  background-color: #fff;
   .title-box {
     display: flex;
     align-items: center;

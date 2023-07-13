@@ -35,14 +35,16 @@ module.exports = (appInfo) => {
       // plugins: [createdPlugin, [updatedPlugin, pluginOptions]],
     }
   };
+  config.multipart = {
+    mode: 'file', // 设置上传方式为文件
+  },
 
- 
-  // 设置cors配置
-  config.cors = {
-    origin: process.env.EGG_SERVER_ENV === 'dev' ? 'http://localhost:3000' : 'http://123.57.88.38',
-    allowMethods: 'GET,POST',
-    credentials: true,
-  };
+    // 设置cors配置
+    config.cors = {
+      origin: process.env.EGG_SERVER_ENV === 'dev' ? 'http://localhost:3000' : 'http://123.57.88.38',
+      allowMethods: 'GET,POST',
+      credentials: true,
+    };
   // add your user config here
   const userConfig = {
     prefix: '/next',
@@ -105,7 +107,7 @@ module.exports = (appInfo) => {
   };
 
 
-  
+
 
   // aes key
   // config.aesKey = '1Zt1Hwsecgi8flg9ESI29xFz7WLvur';
