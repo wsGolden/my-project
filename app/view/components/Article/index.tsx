@@ -3,6 +3,7 @@ import { Card, Row, Col } from "antd";
 import { getArticleList } from "./services";
 
 import styles from "./home.module.scss";
+import Link from "next/link";
 const BaseUrl =
   process.env.NODE_ENV === "development"
     ? "http://127.0.0.1:7001"
@@ -24,26 +25,24 @@ export default function Article() {
     <>
       <Row>
         {articleList.map((data, index) => (
-          <Col span={8} key={index} style={{marginTop: 20}}>
-            <Card
-              hoverable
-              style={{ width: 300 }}
-              cover={
-                <img
-                  alt="example"
-                  src={`${BaseUrl}/upload/${data.articlePicId}`}
-                />
-              }
-            >
-              <Meta
-                title={data.articleTitle}
-                description={data.articleDes}
-              />
-            </Card>
+          <Col span={8} key={index} style={{ marginTop: 20 }}>
+            <Link href={`/articledetail?articleId=${data._id}`} target="_blank">
+              <Card
+                hoverable
+                style={{ width: 300 }}
+                cover={
+                  <img
+                    alt="example"
+                    src={`${BaseUrl}/upload/${data.articlePicId}`}
+                  />
+                }
+              >
+                <Meta title={data.articleTitle} description={data.articleDes} />
+              </Card>
+            </Link>
           </Col>
         ))}
       </Row>
     </>
-   
   );
 }
