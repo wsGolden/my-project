@@ -14,7 +14,7 @@ interface ArticleDataVo {
   createTime: string;
   updateTime: string;
 }
-function articleDetail() {
+function ArticleDetail() {
   const [data, setData] = useState({} as ArticleDataVo);
   const [formattedCreateTime, setFormattedCreateTime] = useState("");
   const [formattedUpdateTime, setFormattedUpdateTime] = useState("");
@@ -63,4 +63,4 @@ function articleDetail() {
   );
 }
 
-export default articleDetail;
+export default ArticleDetail;
