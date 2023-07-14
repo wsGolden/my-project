@@ -53,8 +53,6 @@ export default function User() {
     },
   ];
   const handleDelete = async (_id: string) => {
-    // const todo = AV.Object.createWithoutData("TestObject", id);
-    // todo.destroy();
     const { flag } = await removeUser({ _id });
     if (flag === 1) {
       message.success("删除成功");
@@ -67,15 +65,7 @@ export default function User() {
     setRecordId(_id);
   };
 
-  const formatData = (todoData: any) => {
-    const data = todoData.map((i: any) => {
-      return {
-        ...i._serverData,
-        id: i.id,
-      };
-    });
-    return data;
-  };
+
   const handleSearch = (values: { nickName: string; userName: string }) => {
     form.validateFields().then(() => {
       submit({ nickName: values.nickName, userName: values.userName });

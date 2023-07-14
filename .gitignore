@@ -37,3 +37,4 @@ next-env.d.ts
 app/view/.next
 app/view/.next/cache
 run
+upload/

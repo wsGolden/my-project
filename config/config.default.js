@@ -35,16 +35,25 @@ module.exports = (appInfo) => {
       // plugins: [createdPlugin, [updatedPlugin, pluginOptions]],
     }
   };
-  config.multipart = {
-    mode: 'file', // 设置上传方式为文件
-  },
+  // config.multipart = {
+  //   mode: 'stream', // 设置上传方式为文件
+  // },
+  // config.static = {
+  //   prefix: '/', // 静态文件URL的前缀，默认为 "/"
+  //   dir: 'upload', // 静态文件的根目录，默认为 "app/public"
+  // },
 
-    // 设置cors配置
-    config.cors = {
-      origin: process.env.EGG_SERVER_ENV === 'dev' ? 'http://localhost:3000' : 'http://123.57.88.38',
-      allowMethods: 'GET,POST',
-      credentials: true,
-    };
+  // 上传文件配置
+  config.upload = {
+    dir: 'public/upload' // 本地环境
+  };
+
+  // 设置cors配置
+  config.cors = {
+    origin: process.env.EGG_SERVER_ENV === 'dev' ? 'http://localhost:3000' : 'http://123.57.88.38',
+    allowMethods: 'GET,POST',
+    credentials: true,
+  };
   // add your user config here
   const userConfig = {
     prefix: '/next',
@@ -99,14 +108,6 @@ module.exports = (appInfo) => {
       consoleLevel: 'INFO'
     }
   };
-
-  // 上传文件配置
-  config.upload = {
-    // dir: `/data/apps/${process.env.PROJECT_NAME}_${process.env.POD_NAME}_${process.env.POD_IP}/upload`
-    dir: './upload' // 本地环境
-  };
-
-
 
 
   // aes key

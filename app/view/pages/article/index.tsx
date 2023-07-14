@@ -4,7 +4,7 @@ import type { ColumnsType } from "antd/es/table";
 import moment from "moment";
 import useAjaxTable from "../../hooks/useAjaxTable";
 import EditModal from "./EditModal";
-import { removeUser } from "../../services/users/api";
+import { removeArticle } from "../../services/article/api";
 import Header from "@/components/ConfigPageHeader";
 import styles from "./index.module.scss";
 
@@ -22,14 +22,10 @@ export default function Article() {
   const { tableProps, submit, searchData } = useAjaxTable("/api/article/list");
   const columns: ColumnsType<DataType> = [
     {
-      dataIndex: "_id",
-      title: "ID",
-      width: 200,
-    },
-
-    {
       dataIndex: "articleTitle",
       title: "文章标题",
+      width: 150,
+
     },
     {
       dataIndex: "articleDes",
@@ -45,7 +41,6 @@ export default function Article() {
       dataIndex: "articleContent",
       title: "文章内容",
       key: "articleContent",
-      width: 120,
       render: (text) => (
         <Tooltip title={text}>
           <span className={styles.ellipsis3}>{text}</span>
@@ -55,11 +50,13 @@ export default function Article() {
     {
       dataIndex: "createTime",
       title: "创建时间",
+      width:150,
       render: (text: string) => moment(text).format("YYYY-MM-DD HH:mm:ss"),
     },
     {
       dataIndex: "updateTime",
       title: "更新时间",
+      width:150,
       render: (text: string) => moment(text).format("YYYY-MM-DD HH:mm:ss"),
     },
     {
@@ -78,9 +75,7 @@ export default function Article() {
     },
   ];
   const handleDelete = async (_id: string) => {
-    // const todo = AV.Object.createWithoutData("TestObject", id);
-    // todo.destroy();
-    const { flag } = await removeUser({ _id });
+    const { flag } = await removeArticle({ _id });
     if (flag === 1) {
       message.success("删除成功");
       submit({ ...searchData });
@@ -92,18 +87,9 @@ export default function Article() {
     setRecordId(_id);
   };
 
-  const formatData = (todoData: any) => {
-    const data = todoData.map((i: any) => {
-      return {
-        ...i._serverData,
-        id: i.id,
-      };
-    });
-    return data;
-  };
-  const handleSearch = (values: { nickName: string; userName: string }) => {
+  const handleSearch = (values) => {
     form.validateFields().then(() => {
-      submit({ nickName: values.nickName, userName: values.userName });
+      submit(values);
     });
   };
   const handleAdd = () => {

@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 import { Card, Row, Col } from "antd";
 import { getArticleList } from "./services";
-import styles from "./home.module.scss";
 
+import styles from "./home.module.scss";
+const BaseUrl =
+  process.env.NODE_ENV === "development"
+    ? "http://127.0.0.1:7001"
+    : "http://123.57.88.38:7001";
 const { Meta } = Card;
 
 export default function Article() {
@@ -27,7 +31,7 @@ export default function Article() {
               cover={
                 <img
                   alt="example"
-                  src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+                  src={`${BaseUrl}/upload/${data.articlePicId}`}
                 />
               }
             >

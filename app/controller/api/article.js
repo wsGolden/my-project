@@ -14,11 +14,11 @@ class CrudListController extends Controller {
       // 用于计数分页
       const findData = await app.model.Article.find({});
       const totalRows = findData.length || 0;
-      const userList = await app.model.Article.list(query, sortData, skipData, limitData);
+      const articleList = await app.model.Article.list(query, sortData, skipData, limitData);
 
       const result = {
         curPage,
-        dataList: userList,
+        dataList: articleList,
         totalRows,
       };
       ctx.body = ctx.helper.jsonResult.success(result);
@@ -31,8 +31,6 @@ class CrudListController extends Controller {
     const { ctx, app } = this;
     const {
       articleTitle,
-      articleDes,
-      articleContent,
     } = ctx.request.body;
     try {
       const findData = await app.model.Article.find({ articleTitle });
@@ -40,11 +38,7 @@ class CrudListController extends Controller {
         ctx.body = ctx.helper.jsonResult.error(new Error('当前姓名已存在'), 5000);
         return
       }
-      const result = new app.model.Article({
-        articleTitle,
-        articleDes,
-        articleContent
-      });
+      const result = new app.model.Article({ ...ctx.request.body });
 
       const userInfo = await result.save();
       ctx.body = ctx.helper.jsonResult.success(userInfo);
@@ -77,7 +71,7 @@ class CrudListController extends Controller {
       _id
     } = ctx.request.body;
     try {
-      const result = await await app.model.Article.findOne({ _id });
+      const result = await app.model.Article.findOne({ _id });
       ctx.body = ctx.helper.jsonResult.success(result);
     } catch (err) {
       ctx.body = ctx.helper.jsonResult.error(err, 2);
@@ -90,7 +84,8 @@ class CrudListController extends Controller {
       _id,
       articleTitle,
       articleDes,
-      articleContent
+      articleContent,
+      articlePicId
     } = ctx.request.body;
     try {
       const findData = await app.model.Article.findOne({ articleTitle });
@@ -105,7 +100,8 @@ class CrudListController extends Controller {
         {
           articleTitle,
           articleDes,
-          articleContent
+          articleContent,
+          articlePicId
         },
         {
           upsert: true

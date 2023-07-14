@@ -1,5 +1,5 @@
 /**
- * 用户信息
+ * 短文
  *
  */
 
@@ -8,7 +8,7 @@ module.exports = app => {
   const mongoose = app.mongoose;
   const Schema = mongoose.Schema;
 
-  const userSchema = new Schema({
+  const articleSchema = new Schema({
     articleTitle: { 
       type: String,
     },
@@ -18,6 +18,9 @@ module.exports = app => {
     articleContent: {
       type: String,
     },
+    articlePicId: {
+      type: String,
+    },
   }, {
     timestamps: {
       createdAt: 'createTime',
@@ -25,15 +28,15 @@ module.exports = app => {
     },
   });
 
-  userSchema.statics.list = async ({ userName = '', nickName = '' }, sortData, skipData, limitData) => {
+  articleSchema.statics.list = async ({ articleTitle = '', articleDes = '', articleContent = '' }, sortData, skipData, limitData) => {
     return mongoose.model(modelName).aggregate([
       {
         $match: {
-          ['articleTitle']: { $regex: userName, $options: "i" },
+          ['articleTitle']: { $regex: articleTitle, $options: "i" },
           ['articleDes']:
-            { $regex: nickName, $options: "i" },
+            { $regex: articleDes, $options: "i" },
           ['articleContent']:
-            { $regex: nickName, $options: "i" }
+            { $regex: articleContent, $options: "i" }
         }
       },
       {
@@ -48,5 +51,5 @@ module.exports = app => {
     ]);
   };
 
-  return mongoose.model(modelName, userSchema);
+  return mongoose.model(modelName, articleSchema);
 };

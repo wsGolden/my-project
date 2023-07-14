@@ -14,10 +14,7 @@ interface Iprops {
   recordId: string;
 }
 
-interface resDta {
-  _serverData: {};
-}
-const uploadActin =
+const uploadAction =
   process.env.NODE_ENV === "development"
     ? "http://127.0.0.1:7001"
     : "http://123.57.88.38:7001";
@@ -36,37 +33,16 @@ function EditModal({ onSubmit, onCancel, recordId }: Iprops) {
           articleTitle,
           articleDes,
           articleContent,
+          articlePicId: ''
         });
       }
     };
     editUserFn();
   }, [recordId, form]);
 
-  const handleUpload = async () => {
-    const formData = new FormData();
-    fileList.forEach((file) => {
-      formData.append("file", file);
-    });
-
-    // 设置
-    let config = {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    };
-    const response = await axiosPost("/api/upload", formData, config);
-    console.log(response, 213132);
-    // if (response && response.url) {
-    //   setResult(response.url);
-    //   message.success('上传成功');
-    // } else {
-    //   message.success('上传失败');
-    // }
-  };
+  
   const beforeUpload = (file) => {
     setFileList([file]);
-    // setFileList([...fileList, file]);
-    // return false;
   };
 
   const onRemove = (file) => {
@@ -99,7 +75,10 @@ function EditModal({ onSubmit, onCancel, recordId }: Iprops) {
     form.resetFields();
     onCancel?.();
   };
-
+  const fileChange = (file) => {
+    const response = file.file.response;
+    form.setFieldsValue({ articlePicId: response?.data });
+  };
   return (
     <Modal
       open={true}
@@ -135,24 +114,22 @@ function EditModal({ onSubmit, onCancel, recordId }: Iprops) {
         >
           <Input.TextArea rows={4} />
         </Form.Item>
-        <Form.Item name="articlePic" label="展示图片">
+        <Form.Item name="articlePicId" label="展示图片">
           <Upload
             accept=".jpg, .gif, .bmp, .png, .jpeg, .png, .webp"
             beforeUpload={beforeUpload}
+            listType="picture"
             onRemove={onRemove}
             fileList={fileList}
+            action={`${uploadAction}/api/file/upload?imageId=${recordId}`}
+            onChange={(file) => fileChange(file)}
+            // headers={{
+            //   'Content-Type': "multipart/form-data",
+            // }}
           >
             <Button icon={<UploadOutlined />}>选择图片</Button>
           </Upload>
         </Form.Item>
-        <Button
-          type="primary"
-          onClick={handleUpload}
-          disabled={fileList.length === 0}
-          style={{ marginTop: 16 }}
-        >
-          开始上传
-        </Button>
       </Form>
     </Modal>
   );

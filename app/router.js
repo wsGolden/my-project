@@ -18,5 +18,6 @@ module.exports = app => {
   router.post('/api/article/detail', controller.api.article.detail);
   router.post('/api/article/update', controller.api.article.update);
 
-  router.post('/api/upload', controller.api.upload.upload);
+  router.post('/api/file/upload', controller.api.file.upload);
+  router.get('/upload/:filename', controller.api.file.show);
 };
