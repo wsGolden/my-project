@@ -38,3 +38,4 @@ app/view/.next
 app/view/.next/cache
 run
 upload/
+logs/

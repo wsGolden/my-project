@@ -1,9 +1,10 @@
 import { ReactNode, useEffect, useState } from "react";
+import axios, { axiosPost } from "@/common/utils/axios";
+
 import { Space } from "antd";
 import moment from "moment";
 
 import { getSearchParam } from "@/common/utils";
-import { getArticleDetail } from "./services/api";
 import Layout from "@/components/Layout";
 import styles from "./home.module.scss";
 interface ArticleDataVo {
@@ -27,12 +28,14 @@ function ArticleDetail() {
       moment(data.updateTime).format("YYYY-MM-DD HH:mm:ss")
     );
   }, []);
+  const getArticleDetail = (params: { _id: string }) => {
+    return axiosPost("/api/article/detail", params);
+  };
   useEffect(() => {
     const getArticleDetailFn = async () => {
       const articleId = getSearchParam("articleId");
       if (articleId) {
         const { flag, data } = await getArticleDetail({ _id: articleId });
-        console.log(flag, data, 123312);
         setData(data);
       }
     };
