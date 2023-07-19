@@ -5,3 +5,4 @@ export const getArticleDetail = (params: { _id: string }) => {
   return axiosPost("/api/article/detail", params);
 };
 
+export default { getArticleDetail };

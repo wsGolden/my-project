@@ -3,7 +3,7 @@ import { Space } from "antd";
 import moment from "moment";
 
 import { getSearchParam } from "@/common/utils";
-import { getArticleDetail } from "./services";
+import { getArticleDetail } from "./services/api";
 import Layout from "@/components/Layout";
 import styles from "./home.module.scss";
 interface ArticleDataVo {
