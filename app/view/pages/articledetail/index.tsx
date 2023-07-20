@@ -20,14 +20,6 @@ function ArticleDetail() {
   const [formattedCreateTime, setFormattedCreateTime] = useState("");
   const [formattedUpdateTime, setFormattedUpdateTime] = useState("");
 
-  useEffect(() => {
-    setFormattedCreateTime(
-      moment(data.createTime).format("YYYY-MM-DD HH:mm:ss")
-    );
-    setFormattedUpdateTime(
-      moment(data.updateTime).format("YYYY-MM-DD HH:mm:ss")
-    );
-  }, []);
   const getArticleDetail = (params: { _id: string }) => {
     return axiosPost("/api/article/detail", params);
   };
@@ -37,6 +29,12 @@ function ArticleDetail() {
       if (articleId) {
         const { flag, data } = await getArticleDetail({ _id: articleId });
         setData(data);
+        setFormattedCreateTime(
+          moment(data.createTime).format("YYYY-MM-DD HH:mm:ss")
+        );
+        setFormattedUpdateTime(
+          moment(data.updateTime).format("YYYY-MM-DD HH:mm:ss")
+        );
       }
     };
     getArticleDetailFn();
