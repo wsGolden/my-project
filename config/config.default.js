@@ -35,13 +35,7 @@ module.exports = (appInfo) => {
       // plugins: [createdPlugin, [updatedPlugin, pluginOptions]],
     }
   };
-  // config.multipart = {
-  //   mode: 'stream', // 设置上传方式为文件
-  // },
-  // config.static = {
-  //   prefix: '/', // 静态文件URL的前缀，默认为 "/"
-  //   dir: 'upload', // 静态文件的根目录，默认为 "app/public"
-  // },
+
 
   // 上传文件配置
   config.upload = {

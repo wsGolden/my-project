@@ -17,13 +17,14 @@ export const getArticleDetail = (params: { _id: string }) => {
   return axiosPost("/api/article/detail", params);
 };
 
-export const updateUser = (params: {
+export const updateArticle = (params: {
   _id: string;
   articleTitle: string;
   articleDes: string;
   articleContent: string;
+  articlePicId: string;
 }) => {
   return axiosPost("/api/article/update", params);
 };
 
-export default { updateUser };
+export default { updateArticle };

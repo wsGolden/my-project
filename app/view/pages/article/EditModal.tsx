@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Form, Input, Upload, Button } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import axios, { axiosPost } from "@/common/utils/axios";
-
+import { getImage, getImageIds } from "@/common/utils";
 import {
   addArticle,
-  updateUser,
+  updateArticle,
   getArticleDetail,
 } from "../../services/article/api";
 interface Iprops {
@@ -27,24 +26,24 @@ function EditModal({ onSubmit, onCancel, recordId }: Iprops) {
       if (recordId) {
         const {
           flag,
-          data: { articleTitle, articleDes, articleContent },
+          data: { articleTitle, articleDes, articleContent, articlePicId },
         } = await getArticleDetail({ _id: recordId });
         form.setFieldsValue({
           articleTitle,
           articleDes,
           articleContent,
-          articlePicId: ''
+          articlePicId: articlePicId ? getImage(articlePicId) : [],
         });
       }
     };
     editUserFn();
   }, [recordId, form]);
-
-  
-  const beforeUpload = (file) => {
-    setFileList([file]);
+  const normFile = (e) => {
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e?.fileList;
   };
-
   const onRemove = (file) => {
     const index = fileList.indexOf(file);
     const newFileList = fileList.slice();
@@ -52,10 +51,14 @@ function EditModal({ onSubmit, onCancel, recordId }: Iprops) {
     setFileList(newFileList);
   };
   const handleSubmit = async (values: any) => {
+    const formValues = {
+      ...values,
+      articlePicId: values.articlePicId ? getImageIds(values.articlePicId) : "",
+    };
     if (recordId) {
-      const { flag } = await updateUser({
+      const { flag } = await updateArticle({
         _id: recordId,
-        ...values,
+        ...formValues,
       });
       if (flag === 1) {
         onSubmit();
@@ -64,7 +67,7 @@ function EditModal({ onSubmit, onCancel, recordId }: Iprops) {
       }
       return;
     }
-    const { flag } = await addArticle(values);
+    const { flag } = await addArticle(formValues);
     if (flag === 1) {
       onSubmit();
 
@@ -74,10 +77,6 @@ function EditModal({ onSubmit, onCancel, recordId }: Iprops) {
   const handleCancel = () => {
     form.resetFields();
     onCancel?.();
-  };
-  const fileChange = (file) => {
-    const response = file.file.response;
-    form.setFieldsValue({ articlePicId: response?.data });
   };
   return (
     <Modal
@@ -114,18 +113,18 @@ function EditModal({ onSubmit, onCancel, recordId }: Iprops) {
         >
           <Input.TextArea rows={4} />
         </Form.Item>
-        <Form.Item name="articlePicId" label="展示图片">
+        <Form.Item
+          name="articlePicId"
+          label="展示图片"
+          valuePropName="fileList"
+          getValueFromEvent={normFile}
+        >
           <Upload
             accept=".jpg, .gif, .bmp, .png, .jpeg, .png, .webp"
-            beforeUpload={beforeUpload}
             listType="picture"
             onRemove={onRemove}
-            fileList={fileList}
             action={`${uploadAction}/api/file/upload?imageId=${recordId}`}
-            onChange={(file) => fileChange(file)}
-            // headers={{
-            //   'Content-Type': "multipart/form-data",
-            // }}
+            maxCount={1}
           >
             <Button icon={<UploadOutlined />}>选择图片</Button>
           </Upload>
