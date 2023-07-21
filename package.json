@@ -8,13 +8,14 @@
     "stop": "egg-scripts stop --title=ws-project",
     "dev": "node ./scripts/beforeStart.js -e ENV_QA && EGG_SERVER_ENV=dev egg-bin dev",
     "lint": "next lint",
+    "debug": "egg-bin debug",
     "next:start": "next start app/view",
     "prod": "next build && next start",
     "analyze": "ANALYZE=true next build && next bundle-analyzer",
     "build": "npm run next:build && rm -rf app/view/.next/cache",
     "next:build": "next build app/view",
     "next:dev": "next app/view",
-    "next:online": "next build app/view && pm2 start ecosystem.config.js"
+    "next:online": "pm2 start ecosystem.config.js"
   },
   "engines": {
     "node": ">=16.0.0"

@@ -26,6 +26,7 @@ function MyApp({ Component, pageProps }: Iprops) {
   return (
     <>
       <Head>
+        <link rel="icon" href="http://localhost:3000/favicon.ico" />
         <title>{title}</title>
       </Head>
       <Component {...pageProps} />
