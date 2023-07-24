@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Table, Form, Input, Button, message, Space, Image } from "antd";
-import { MenuOutlined, GithubOutlined, HighlightOutlined } from "@ant-design/icons";
+import {
+  MenuOutlined,
+  GithubOutlined,
+  HighlightOutlined,
+  GlobalOutlined,
+} from "@ant-design/icons";
 
 import Link from "next/link";
 import Code from "@/static/images/code.svg";
@@ -11,7 +16,7 @@ import Logo from "@/static/images/logo.svg";
 export default function Header() {
   return (
     <div className={styles["header-box"]}>
-      <div style={{display: 'flex'}}>
+      <div style={{ display: "flex" }}>
         <Link href="/" className={styles["title-box"]}>
           <div className={styles["title-cont-box"]}>
             <Code width="20" height="20" color="#000" />
@@ -20,12 +25,18 @@ export default function Header() {
             <div className={styles["title-coder"]}>Coder</div>
           </div>
         </Link>
-        <Link href="/article" style={{marginLeft: 10}}>
+        <Link href="/article" style={{ marginLeft: 10 }}>
           <HighlightOutlined /> 写短文
         </Link>
       </div>
-     
+
       <Space className={styles.menubox}>
+        <Space className={styles.menu}>
+          <GlobalOutlined />
+          <Link href="/news" >
+              每日新闻60s
+          </Link>
+        </Space>
         <Space className={styles.menu}>
           <MenuOutlined />
           <a>分类</a>

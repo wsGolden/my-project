@@ -1,5 +1,7 @@
 const fs = require('fs');
 const path = require('path');
+// const zlib = require('zlib'); // 文件压缩
+const sharp = require('sharp');
 const Controller = require('egg').Controller;
 const sendToWormhole = require('stream-wormhole');
 
@@ -14,31 +16,58 @@ class FileController extends Controller {
       const stream = await ctx.getFileStream();
       const filename = `${imageId}.${stream.filename.split('.')[1]}`;
       const filePath = path.join(this.config.upload.dir, filename);
-
       if (!fs.existsSync(this.config.upload.dir)) {
         fs.mkdirSync(this.config.upload.dir);
       }
+      let useSharp = true
+      // 使用图片压缩
       const result = await new Promise((resolve, reject) => {
-        // 创建文件写入流
-        const remoteFileStrem = fs.createWriteStream(filePath)
-        // 以管道方式写入流
-        stream.pipe(remoteFileStrem)
+        if (useSharp) {
+          const chunks = [];
 
-        let errFlag
-        // 监听error事件
-        remoteFileStrem.on('error', err => {
-          errFlag = true
-          // 停止写入
-          sendToWormhole(stream)
-          remoteFileStrem.destroy()
-          reject(err)
-        })
+          stream.on('data', (chunk) => {
+            chunks.push(chunk);
+          });
+          stream.on('end', () => {
+            const buffer = Buffer.concat(chunks);
+            sharp(buffer)
+              .resize(800)
+              .toFile(filePath, (err) => {
+                if (err) {
+                  reject(err);
+                } else {
+                  console.log('图片处理完成！');
+                  resolve(filePath);
+                }
+              });
+          });
 
-        // 监听写入完成事件
-        remoteFileStrem.on('finish', () => {
-          if (errFlag) return
-          resolve(filename)
-        })
+          stream.on('error', (err) => {
+            reject(err);
+          });
+        } else {
+          // 创建文件写入流
+          const remoteFileStrem = fs.createWriteStream(filePath)
+
+          // 以管道方式写入流
+          stream.pipe(remoteFileStrem)
+
+          let errFlag
+          // 监听error事件
+          remoteFileStrem.on('error', err => {
+            errFlag = true
+            // 停止写入
+            sendToWormhole(stream)
+            remoteFileStrem.destroy()
+            reject(err)
+          })
+
+          // 监听写入完成事件
+          remoteFileStrem.on('finish', () => {
+            if (errFlag) return
+            resolve(filename)
+          })
+        }
       })
       if (result) {
         const File = this.ctx.model.File;
@@ -48,15 +77,10 @@ class FileController extends Controller {
         };
         await File.create(fileData);
         ctx.body = ctx.helper.jsonResult.success(filename);
-
       }
-
-    
-
     } catch (error) {
       console.error(error);
       ctx.body = 'An error occurred during file upload';
-
     }
 
   }

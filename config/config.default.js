@@ -16,12 +16,6 @@ module.exports = (appInfo) => {
    **/
   const config = (exports = {});
 
-
-
-  // monogodb 连接配置
-  const zkConfig = dyConfig.getData();
-  console.log('[config.default] zk配置：', zkConfig);
-
   // monogodb 连接配置
   config.mongoose = {
     client: {
