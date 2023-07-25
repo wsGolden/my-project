@@ -1,10 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 // const zlib = require('zlib'); // 文件压缩
-const sharp = require('sharp');
+// const sharp = require('sharp'); // 图像压缩
 const Controller = require('egg').Controller;
 const sendToWormhole = require('stream-wormhole');
-
+const Jimp = require('jimp');
 const { v4: uuidv4, v1: uuidv1 } = require('uuid');
 
 class FileController extends Controller {
@@ -23,22 +23,46 @@ class FileController extends Controller {
       // 使用图片压缩
       const result = await new Promise((resolve, reject) => {
         if (useSharp) {
-          const chunks = [];
+          // const chunks = []; // sharp方式
+
+          // stream.on('data', (chunk) => {
+          //   chunks.push(chunk);
+          // });
+          // stream.on('end', () => {
+          //   const buffer = Buffer.concat(chunks);
+          //   sharp(buffer)
+          //     .resize(800)
+          //     .toFile(filePath, (err) => {
+          //       if (err) {
+          //         reject(err);
+          //       } else {
+          //         console.log('图片处理完成！');
+          //         resolve(filePath);
+          //       }
+          //     });
+          // });
+
+          // stream.on('error', (err) => {
+          //   reject(err);
+          // });
+          const chunks = []; // jimp方式
 
           stream.on('data', (chunk) => {
             chunks.push(chunk);
           });
           stream.on('end', () => {
             const buffer = Buffer.concat(chunks);
-            sharp(buffer)
-              .resize(800)
-              .toFile(filePath, (err) => {
-                if (err) {
-                  reject(err);
-                } else {
-                  console.log('图片处理完成！');
-                  resolve(filePath);
-                }
+            Jimp.read(buffer)
+              .then(image => {
+                // 调整图像大小并保存到文件
+                return image.resize(600, Jimp.AUTO).quality(80).writeAsync(filePath);
+              })
+              .then(() => {
+                console.log('图片处理完成！');
+                resolve(filePath);
+              })
+              .catch(err => {
+                reject(err);
               });
           });
 
