@@ -43,12 +43,8 @@ function ArticleDetail() {
     <Layout>
       <h2>{data.articleTitle}</h2>
       <Space direction="vertical">
-        <div>
-          创建时间：{formattedCreateTime}
-        </div>
-        <div>
-          更新时间：{formattedUpdateTime}
-        </div>
+        <div>创建时间：{formattedCreateTime}</div>
+        <div>更新时间：{formattedUpdateTime}</div>
       </Space>
 
       {/* <div>{data.articleDes}</div> */}
@@ -57,9 +53,10 @@ function ArticleDetail() {
           <strong>{data.articleDes}</strong>
         </p>
       </div>
-      <div className={`${styles.block} ${styles.contentblock}`}>
-        {data.articleContent}
-      </div>
+      <div
+        dangerouslySetInnerHTML={{ __html: data.articleContent }}
+        className={`${styles.block} ${styles.contentblock}`}
+      />
     </Layout>
   );
 }

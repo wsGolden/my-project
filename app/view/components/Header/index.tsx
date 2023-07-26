@@ -25,7 +25,7 @@ export default function Header() {
             <div className={styles["title-coder"]}>Coder</div>
           </div>
         </Link>
-        <Link href="/article" style={{ marginLeft: 10 }}>
+        <Link href="/editarticle" style={{ marginLeft: 10 }}>
           <HighlightOutlined /> 写短文
         </Link>
       </div>
@@ -33,9 +33,11 @@ export default function Header() {
       <Space className={styles.menubox}>
         <Space className={styles.menu}>
           <GlobalOutlined />
-          <Link href="/news" >
-              每日新闻60s
-          </Link>
+          <Link href="/news">每日新闻60s</Link>
+        </Space>
+        <Space className={styles.menu}>
+          <GlobalOutlined />
+          <Link href="/article">短文列表</Link>
         </Space>
         <Space className={styles.menu}>
           <MenuOutlined />

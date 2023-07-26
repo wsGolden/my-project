@@ -2,15 +2,14 @@ const fs = require('fs');
 const path = require('path');
 // const zlib = require('zlib'); // 文件压缩
 // const sharp = require('sharp'); // 图像压缩
+const Jimp = require('jimp');  // 图像压缩
 const Controller = require('egg').Controller;
 const sendToWormhole = require('stream-wormhole');
-const Jimp = require('jimp');
 const { v4: uuidv4, v1: uuidv1 } = require('uuid');
 
 class FileController extends Controller {
   async upload() {
     const ctx = this.ctx;
-    const { app } = this
     const imageId = ctx.request.query?.imageId || uuidv1() // 新增时创建uuid
     try {
       const stream = await ctx.getFileStream();
@@ -19,63 +18,55 @@ class FileController extends Controller {
       if (!fs.existsSync(this.config.upload.dir)) {
         fs.mkdirSync(this.config.upload.dir);
       }
-      let useSharp = true
+      let compress = true
       // 使用图片压缩
       const result = await new Promise((resolve, reject) => {
-        if (useSharp) {
-          // const chunks = []; // sharp方式
-
-          // stream.on('data', (chunk) => {
-          //   chunks.push(chunk);
-          // });
-          // stream.on('end', () => {
-          //   const buffer = Buffer.concat(chunks);
-          //   sharp(buffer)
-          //     .resize(800)
-          //     .toFile(filePath, (err) => {
-          //       if (err) {
-          //         reject(err);
-          //       } else {
-          //         console.log('图片处理完成！');
-          //         resolve(filePath);
-          //       }
-          //     });
-          // });
-
-          // stream.on('error', (err) => {
-          //   reject(err);
-          // });
+        if (compress) {
           const chunks = []; // jimp方式
 
           stream.on('data', (chunk) => {
             chunks.push(chunk);
           });
-          stream.on('end', () => {
+          stream.on('end', async () => {
             const buffer = Buffer.concat(chunks);
-            Jimp.read(buffer)
-              .then(image => {
-                // 调整图像大小并保存到文件
-                return image.resize(600, Jimp.AUTO).quality(80).writeAsync(filePath);
-              })
-              .then(() => {
-                console.log('图片处理完成！');
+            //   sharp(buffer) // sharp方式
+            //     .resize(800)
+            //     .toFile(filePath, (err) => {
+            //       if (err) {
+            //         reject(err);
+            //       } else {
+            //         console.log('图片处理完成！');
+            //         resolve(filePath);
+            //       }
+            //     });
+            try {
+              const image = await Jimp.read(buffer)
+              await image.resize(600, Jimp.AUTO).quality(80).writeAsync(filePath);
+              resolve(filePath)
+            } catch (jimpErr) {
+              // console.error('Jimp处理失败:', jimpErr);
+
+              try {
+                // Jimp处理失败，将未压缩的图片数据写入文件
+                await fs.promises.writeFile(filePath, buffer);
+                console.log('未压缩的图片写入完成！');
                 resolve(filePath);
-              })
-              .catch(err => {
-                reject(err);
-              });
+              } catch (writeErr) {
+                console.error('写入未压缩图片失败:', writeErr);
+                reject(writeErr);
+              }
+            }
           });
 
           stream.on('error', (err) => {
             reject(err);
           });
         } else {
+          // 不使用压缩
           // 创建文件写入流
           const remoteFileStrem = fs.createWriteStream(filePath)
-
           // 以管道方式写入流
           stream.pipe(remoteFileStrem)
-
           let errFlag
           // 监听error事件
           remoteFileStrem.on('error', err => {
@@ -87,7 +78,7 @@ class FileController extends Controller {
           })
 
           // 监听写入完成事件
-          remoteFileStrem.on('finish', () => {
+          remoteFileStrem.on('finish', (info) => {
             if (errFlag) return
             resolve(filename)
           })
@@ -108,6 +99,7 @@ class FileController extends Controller {
     }
 
   }
+  
   async show() {
     const { ctx } = this;
     const filename = ctx.params.filename;

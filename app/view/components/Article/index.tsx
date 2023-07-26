@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, Row, Col } from "antd";
 import { getArticleList } from "./services";
 
@@ -21,28 +21,32 @@ export default function Article() {
     };
     getArticle();
   }, []);
+
   return (
-    <>
-      <Row>
-        {articleList.map((data, index) => (
-          <Col span={8} key={index} style={{ marginTop: 20 }}>
-            <Link href={`/articledetail?articleId=${data._id}`} target="_blank">
-              <Card
-                hoverable
-                style={{ width: 300 }}
-                cover={
-                  <img
-                    alt="example"
-                    src={`${BaseUrl}/upload/${data.articlePicId}`}
-                  />
-                }
-              >
-                <Meta title={data.articleTitle} description={data.articleDes} />
-              </Card>
-            </Link>
-          </Col>
-        ))}
-      </Row>
-    </>
+    <Row>
+      {articleList.map((data, index) => (
+        <Col
+          span={8}
+          key={index}
+          style={{ marginTop: 20 }}
+          className="card-item"
+        >
+          <Link href={`/articledetail?articleId=${data._id}`} target="_blank">
+            <Card
+              hoverable
+              style={{ width: 300 }}
+              cover={
+                <img
+                  alt="example"
+                  src={`${BaseUrl}/upload/${data.articlePicId}`}
+                />
+              }
+            >
+              <Meta title={data.articleTitle} description={data.articleDes} />
+            </Card>
+          </Link>
+        </Col>
+      ))}
+    </Row>
   );
 }

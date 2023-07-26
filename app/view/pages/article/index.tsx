@@ -3,7 +3,8 @@ import { Table, Form, Input, Button, message, Tooltip } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import moment from "moment";
 import useAjaxTable from "../../hooks/useAjaxTable";
-import EditModal from "./EditModal";
+import EditModal from "@/components/EditArticleSubmitForm";
+
 import { removeArticle } from "../../services/article/api";
 import Header from "@/components/ConfigPageHeader";
 import styles from "./index.module.scss";
@@ -25,7 +26,6 @@ export default function Article() {
       dataIndex: "articleTitle",
       title: "文章标题",
       width: 150,
-
     },
     {
       dataIndex: "articleDes",
@@ -50,13 +50,13 @@ export default function Article() {
     {
       dataIndex: "createTime",
       title: "创建时间",
-      width:150,
+      width: 150,
       render: (text: string) => moment(text).format("YYYY-MM-DD HH:mm:ss"),
     },
     {
       dataIndex: "updateTime",
       title: "更新时间",
-      width:150,
+      width: 150,
       render: (text: string) => moment(text).format("YYYY-MM-DD HH:mm:ss"),
     },
     {
