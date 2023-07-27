@@ -18,7 +18,7 @@ export default function Home() {
       <Layout>
         <div>
           <div className={styles.person}></div>
-          <Alert message="🎉🎉🎉新功能：每日新闻60s功能、优化图片加载速度，快来体验一下～" closable={true} />
+          <Alert message="🎉🎉🎉新功能：富文本编辑，快来体验一下～" closable={true} />
           <div className={styles.pic}>
             <Study width="384" height="384" />
           </div>

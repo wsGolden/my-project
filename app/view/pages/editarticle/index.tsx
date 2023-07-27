@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Button, message } from "antd";
+import { getSearchParam } from "@/common/utils";
 import Layout from "@/components/Layout";
 import EditModal from "@/components/EditArticleSubmitForm";
 
@@ -12,13 +13,14 @@ const MyRichTextEditor = () => {
   const [content, setContent] = useState("");
   const [visible, setVisible] = useState(false);
   const [recordId, setRecordId] = useState("");
-  const childRef = useRef();
 
   const handleEditorChange = (value) => {
-    console.log(value, 22222);
     setContent(value);
   };
-
+  useEffect(() => {
+    const articleId = getSearchParam("articleId");
+    setRecordId(articleId)
+  },[])
   return (
     <Layout>
       <Button

@@ -1,12 +1,14 @@
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { FormOutlined } from "@ant-design/icons";
 import axios, { axiosPost } from "@/common/utils/axios";
-
+import { Parser } from "html-to-react";
 import { Space } from "antd";
 import moment from "moment";
 
 import { getSearchParam } from "@/common/utils";
 import Layout from "@/components/Layout";
 import styles from "./home.module.scss";
+import Link from "next/link";
 interface ArticleDataVo {
   articleContent: string;
   articleDes: string;
@@ -14,6 +16,7 @@ interface ArticleDataVo {
   articleTitle: string;
   createTime: string;
   updateTime: string;
+  _id: string;
 }
 function ArticleDetail() {
   const [data, setData] = useState({} as ArticleDataVo);
@@ -39,24 +42,42 @@ function ArticleDetail() {
     };
     getArticleDetailFn();
   }, []);
+  const HtmlComponent = () => {
+    const htmlString = data?.articleContent;
+    const parser = Parser();
+    const reactElement = parser.parse(htmlString);
+
+    return (
+      <div className={`${styles.block} ${styles.contentblock}`}>
+        {reactElement}
+      </div>
+    );
+  };
+
   return (
     <Layout>
-      <h2>{data.articleTitle}</h2>
+      <div className={styles.flexandcenter}>
+        <h2>{data?.articleTitle}</h2>
+        <Link href={`/editarticle?articleId=${data?._id}`}>
+          <FormOutlined style={{ marginLeft: 10 }} /> 编辑
+        </Link>
+      </div>
+
       <Space direction="vertical">
         <div>创建时间：{formattedCreateTime}</div>
         <div>更新时间：{formattedUpdateTime}</div>
       </Space>
 
-      {/* <div>{data.articleDes}</div> */}
       <div className={styles.block}>
         <p>
           <strong>{data.articleDes}</strong>
         </p>
       </div>
-      <div
+      <HtmlComponent />
+      {/* <div
         dangerouslySetInnerHTML={{ __html: data.articleContent }}
         className={`${styles.block} ${styles.contentblock}`}
-      />
+      /> */}
     </Layout>
   );
 }

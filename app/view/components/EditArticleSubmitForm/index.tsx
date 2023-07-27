@@ -32,12 +32,11 @@ const EditArticleSubmitForm = ({
       if (recordId) {
         const {
           flag,
-          data: { articleTitle, articleDes, articleContent, articlePicId },
+          data: { articleTitle, articleDes, articlePicId },
         } = await getArticleDetail({ _id: recordId });
         form.setFieldsValue({
           articleTitle,
           articleDes,
-          articleContent,
           articlePicId: articlePicId ? getImage(articlePicId) : [],
         });
       }

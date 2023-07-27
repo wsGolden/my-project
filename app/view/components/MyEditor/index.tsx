@@ -1,8 +1,10 @@
-import "@wangeditor/editor/dist/css/style.css"; // 引入 css
-
 import React, { useState, useEffect } from "react";
+import axios, { axiosPost } from "@/common/utils/axios";
+
 import { Editor, Toolbar } from "@wangeditor/editor-for-react";
 import { IDomEditor, IEditorConfig, IToolbarConfig } from "@wangeditor/editor";
+import { getSearchParam } from "@/common/utils";
+import "@wangeditor/editor/dist/css/style.css"; // 引入 css
 
 function MyEditor({ getHtml }) {
   // editor 实例
@@ -11,13 +13,20 @@ function MyEditor({ getHtml }) {
 
   // 编辑器内容
   const [html, setHtml] = useState("");
-
+  const getArticleDetail = (params: { _id: string }) => {
+    return axiosPost("/api/article/detail", params);
+  };
   // 模拟 ajax 请求，异步设置 html
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setHtml("<p>hello world</p>");
-  //   }, 1500);
-  // }, []);
+  useEffect(() => {
+    const getArticleDetailFn = async () => {
+      const articleId = getSearchParam("articleId");
+      if (articleId) {
+        const { flag, data } = await getArticleDetail({ _id: articleId });
+        setHtml(data.articleContent);
+      }
+    };
+    getArticleDetailFn();
+  }, []);
 
   // 工具栏配置
   const toolbarConfig: Partial<IToolbarConfig> = {};

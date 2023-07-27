@@ -8,6 +8,7 @@ import EditModal from "@/components/EditArticleSubmitForm";
 import { removeArticle } from "../../services/article/api";
 import Header from "@/components/ConfigPageHeader";
 import styles from "./index.module.scss";
+import Link from "next/link";
 
 interface DataType {
   _id: string;
@@ -42,8 +43,11 @@ export default function Article() {
       title: "文章内容",
       key: "articleContent",
       render: (text) => (
-        <Tooltip title={text}>
-          <span className={styles.ellipsis3}>{text}</span>
+        <Tooltip title={<div dangerouslySetInnerHTML={{ __html: text }} />}>
+          <div
+            dangerouslySetInnerHTML={{ __html: text }}
+            className={styles.ellipsis3}
+          />
         </Tooltip>
       ),
     },
@@ -64,9 +68,12 @@ export default function Article() {
       title: "操作",
       render: (text: any, { _id }: DataType) => (
         <>
-          <Button type="link" onClick={() => handleEdit(_id)}>
-            编辑
-          </Button>
+          <Link target="_blank" href={`/editarticle?articleId=${_id}`}>
+            <Button type="link">编辑</Button>
+          </Link>
+          <Link target="_blank" href={`/articledetail?articleId=${_id}`}>
+            <Button type="link">详情</Button>
+          </Link>
           <Button type="link" danger onClick={() => handleDelete(_id)}>
             删除
           </Button>

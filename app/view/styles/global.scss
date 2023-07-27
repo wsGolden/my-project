@@ -47,3 +47,8 @@
 .ellipsis3 {
   @include ellipsis(3);
 }
+
+.flexandcenter {
+  display: flex;
+  align-items: center;
+}
