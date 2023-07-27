@@ -6,15 +6,16 @@
     "start": "npm run start:online",
     "start:online": "node ./scripts/beforeStart.js && egg-scripts start --daemon --workers=1 --title=ws-project",
     "stop": "egg-scripts stop --title=ws-project",
-    "dev": "node ./scripts/beforeStart.js -e ENV_QA && EGG_SERVER_ENV=dev egg-bin dev",
+    "dev": "node ./scripts/beforeStart.js -e ENV_QA && EGG_SERVER_ENV=local egg-bin dev",
     "lint": "next lint",
+    "debug": "egg-bin debug",
     "next:start": "next start app/view",
     "prod": "next build && next start",
     "analyze": "ANALYZE=true next build && next bundle-analyzer",
     "build": "npm run next:build && rm -rf app/view/.next/cache",
     "next:build": "next build app/view",
     "next:dev": "next app/view",
-    "next:online": "next build app/view && pm2 start ecosystem.config.js"
+    "next:online": "next app/view && pm2 start ecosystem.config.js"
   },
   "engines": {
     "node": ">=16.0.0"
@@ -24,9 +25,10 @@
     "@types/node": "20.2.3",
     "@types/react": "18.2.7",
     "@types/react-dom": "18.2.4",
+    "@wangeditor/editor": "^5.1.23",
+    "@wangeditor/editor-for-react": "^1.0.6",
     "axios": "^1.4.0",
     "compression": "^1.7.4",
-    "D": "^1.0.0",
     "egg": "^2.29.1",
     "egg-cors": "^2.2.3",
     "egg-logrotator-forward": "^3.1.0",
@@ -38,6 +40,8 @@
     "eslint": "8.40.0",
     "eslint-config-next": "13.2.4",
     "fs-extra": "^10.0.0",
+    "html-to-react": "^1.6.0",
+    "jimp": "^0.22.8",
     "leancloud-storage": "^4.15.0",
     "less": "^4.1.3",
     "less-loader": "^11.1.3",
@@ -48,10 +52,10 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "sass": "^1.63.5",
-    "sass-loader": "^13.3.2",
     "typescript": "5.0.4",
     "url-loader": "^4.1.1",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "zlib": "^1.0.5"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.0.1",

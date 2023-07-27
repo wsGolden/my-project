@@ -1,50 +1,79 @@
-import { useState } from "react";
-import { Table, Form, Input, Button, message } from "antd";
+import { ReactNode, useState } from "react";
+import { Table, Form, Input, Button, message, Tooltip } from "antd";
+import type { ColumnsType } from "antd/es/table";
 import moment from "moment";
 import useAjaxTable from "../../hooks/useAjaxTable";
-import EditModal from "./EditModal";
-import { removeUser } from "../../services/users/api";
+import EditModal from "@/components/EditArticleSubmitForm";
+
+import { removeArticle } from "../../services/article/api";
 import Header from "@/components/ConfigPageHeader";
-interface Record {
+import styles from "./index.module.scss";
+import Link from "next/link";
+
+interface DataType {
   _id: string;
+  articleContent: string;
+  articleDes: string;
+  articleTitle: string;
 }
-export default function User() {
+
+export default function Article() {
   const [form] = Form.useForm();
   const [visible, setVisible] = useState(false);
   const [recordId, setRecordId] = useState("");
-  const { tableProps, submit, searchData } = useAjaxTable("/api/user/list");
-  const columns = [
+  const { tableProps, submit, searchData } = useAjaxTable("/api/article/list");
+  const columns: ColumnsType<DataType> = [
     {
-      dataIndex: "_id",
-      title: "ID",
-      width: 100,
+      dataIndex: "articleTitle",
+      title: "文章标题",
+      width: 150,
     },
     {
-      dataIndex: "userName",
-      title: "名字",
+      dataIndex: "articleDes",
+      title: "文章描述",
+      width: 120,
+      render: (text) => (
+        <Tooltip title={text}>
+          <span className={styles.ellipsis3}>{text}</span>
+        </Tooltip>
+      ),
     },
     {
-      dataIndex: "nickName",
-      title: "昵称",
+      dataIndex: "articleContent",
+      title: "文章内容",
+      key: "articleContent",
+      render: (text) => (
+        <Tooltip title={<div dangerouslySetInnerHTML={{ __html: text }} />}>
+          <div
+            dangerouslySetInnerHTML={{ __html: text }}
+            className={styles.ellipsis3}
+          />
+        </Tooltip>
+      ),
     },
     {
       dataIndex: "createTime",
       title: "创建时间",
+      width: 150,
       render: (text: string) => moment(text).format("YYYY-MM-DD HH:mm:ss"),
     },
     {
       dataIndex: "updateTime",
       title: "更新时间",
+      width: 150,
       render: (text: string) => moment(text).format("YYYY-MM-DD HH:mm:ss"),
     },
     {
       dataIndex: "opt",
       title: "操作",
-      render: (text: any, { _id }: Record) => (
+      render: (text: any, { _id }: DataType) => (
         <>
-          <Button type="link" onClick={() => handleEdit(_id)}>
-            编辑
-          </Button>
+          <Link target="_blank" href={`/editarticle?articleId=${_id}`}>
+            <Button type="link">编辑</Button>
+          </Link>
+          <Link target="_blank" href={`/articledetail?articleId=${_id}`}>
+            <Button type="link">详情</Button>
+          </Link>
           <Button type="link" danger onClick={() => handleDelete(_id)}>
             删除
           </Button>
@@ -53,7 +82,7 @@ export default function User() {
     },
   ];
   const handleDelete = async (_id: string) => {
-    const { flag } = await removeUser({ _id });
+    const { flag } = await removeArticle({ _id });
     if (flag === 1) {
       message.success("删除成功");
       submit({ ...searchData });
@@ -65,10 +94,9 @@ export default function User() {
     setRecordId(_id);
   };
 
-
-  const handleSearch = (values: { nickName: string; userName: string }) => {
+  const handleSearch = (values) => {
     form.validateFields().then(() => {
-      submit({ nickName: values.nickName, userName: values.userName });
+      submit(values);
     });
   };
   const handleAdd = () => {
@@ -84,10 +112,13 @@ export default function User() {
         onFinish={handleSearch}
         style={{ margin: 20 }}
       >
-        <Form.Item name="userName" label="姓名">
+        <Form.Item name="articleTitle" label="文章标题">
           <Input />
         </Form.Item>
-        <Form.Item name="nickName" label="昵称">
+        <Form.Item name="articleDes" label="文章描述">
+          <Input />
+        </Form.Item>
+        <Form.Item name="articleContent" label="文章内容">
           <Input />
         </Form.Item>
         <Button type="primary" htmlType="submit" style={{ marginRight: 10 }}>

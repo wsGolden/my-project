@@ -10,4 +10,14 @@ module.exports = app => {
   router.post('/api/user/detail', controller.api.user.detail);
   router.post('/api/user/update', controller.api.user.update);
 
+
+  // 文章
+  router.post('/api/article/list', controller.api.article.list);
+  router.post('/api/article/add', controller.api.article.add);
+  router.post('/api/article/remove', controller.api.article.remove);
+  router.post('/api/article/detail', controller.api.article.detail);
+  router.post('/api/article/update', controller.api.article.update);
+
+  router.post('/api/file/upload', controller.api.file.upload);
+  router.get('/upload/:filename', controller.api.file.show);
 };

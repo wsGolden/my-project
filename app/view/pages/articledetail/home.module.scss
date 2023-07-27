@@ -1,0 +1,41 @@
+.block {
+  position: relative;
+  color: #666;
+  padding: 5px 23px 1px;
+  margin: 22px 0;
+  border-left: 4px solid #cbcbcb;
+  background-color: hsla(0, 0%, 78.4%, 0.12);
+  transition: all 0.2s ease-in-out;
+  p {
+    margin: 10px 0;
+  }
+}
+
+.block:before,
+.block:after {
+  position: absolute;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 24px;
+  color: #cbcbcb;
+  opacity: 0.6;
+}
+.block:before {
+  content: "“";
+  top: 4px;
+  left: 6px;
+}
+.block:after {
+  content: "”";
+  right: 8px;
+  bottom: -8px;
+}
+
+.block:hover {
+  border-color: $text-color;
+}
+.contentblock {
+  white-space: pre-line;
+  padding: 30px;
+  background-color: #f0f0f0;
+}

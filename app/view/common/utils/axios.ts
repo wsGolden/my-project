@@ -119,7 +119,8 @@ interface IAxiosStrongArgs {
   /** 是否取消重复请求，默认为true */
   cancelRepeatReq?: boolean
   /** axios请求config */
-  reqConfig?: AxiosRequestConfig
+  reqConfig?: AxiosRequestConfig,
+  headers?: object
 }
 
 /**

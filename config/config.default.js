@@ -16,12 +16,6 @@ module.exports = (appInfo) => {
    **/
   const config = (exports = {});
 
-
-
-  // monogodb 连接配置
-  const zkConfig = dyConfig.getData();
-  console.log('[config.default] zk配置：', zkConfig);
-
   // monogodb 连接配置
   config.mongoose = {
     client: {
@@ -36,10 +30,14 @@ module.exports = (appInfo) => {
     }
   };
 
- 
+
+  // 上传文件配置
+  config.upload = {
+    dir: 'public/upload' // 本地环境
+  };
   // 设置cors配置
   config.cors = {
-    origin: process.env.EGG_SERVER_ENV === 'dev' ? 'http://localhost:3000' : 'http://123.57.88.38',
+    origin: process.env.EGG_SERVER_ENV === 'local' ? 'http://localhost:3000' : 'http://123.57.88.38',
     allowMethods: 'GET,POST',
     credentials: true,
   };
@@ -98,14 +96,6 @@ module.exports = (appInfo) => {
     }
   };
 
-  // 上传文件配置
-  config.upload = {
-    // dir: `/data/apps/${process.env.PROJECT_NAME}_${process.env.POD_NAME}_${process.env.POD_IP}/upload`
-    dir: './upload' // 本地环境
-  };
-
-
-  
 
   // aes key
   // config.aesKey = '1Zt1Hwsecgi8flg9ESI29xFz7WLvur';

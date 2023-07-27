@@ -6,9 +6,11 @@ interface IProps {
 }
 export default function Layout({ children }: IProps) {
   return (
-    <div className={styles["layout"]}>
-      <Header />
-      {children}
-    </div>
+    <>
+      <div className={styles["layout"]}>
+        <Header />
+        {children}
+      </div>
+    </>
   );
 }

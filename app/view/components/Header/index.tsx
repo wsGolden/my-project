@@ -1,28 +1,54 @@
 import React, { useState, useEffect } from "react";
-import { Table, Form, Input, Button, message, Space } from "antd";
-import { MenuOutlined, GithubOutlined } from "@ant-design/icons";
+import { Table, Form, Input, Button, message, Space, Image } from "antd";
+import {
+  MenuOutlined,
+  GithubOutlined,
+  HighlightOutlined,
+  GlobalOutlined,
+} from "@ant-design/icons";
+
 import Link from "next/link";
 import Code from "@/static/images/code.svg";
 import styles from "./index.module.scss";
+import Logo from "@/static/images/logo.svg";
+
 // import '@/common/css/index.module.scss'
 export default function Header() {
   return (
     <div className={styles["header-box"]}>
-      <div className={styles["title-box"]}>
-        <Code width="16" height="16" />
-        <div className={styles["title"]}>Anyway Coder</div>
+      <div style={{ display: "flex" }}>
+        <Link href="/" className={styles["title-box"]}>
+          <div className={styles["title-cont-box"]}>
+            <Code width="20" height="20" color="#000" />
+
+            <span className={styles["title-any"]}>Anyway</span>
+            <div className={styles["title-coder"]}>Coder</div>
+          </div>
+        </Link>
+        <Link href="/editarticle" style={{ marginLeft: 10 }}>
+          <HighlightOutlined /> 写短文
+        </Link>
       </div>
+
       <Space className={styles.menubox}>
         <Space className={styles.menu}>
-          <MenuOutlined />
-          <div>分类</div>
+          <GlobalOutlined />
+          <Link href="/news">每日新闻60s</Link>
         </Space>
-        <a href="https://github.com/wsGolden" target="_blank">
-          <Space className={styles.menu}>
-            <GithubOutlined />
-            <span>源代码</span>
-          </Space>
-        </a>
+        <Space className={styles.menu}>
+          <GlobalOutlined />
+          <Link href="/article">短文列表</Link>
+        </Space>
+        <Space className={styles.menu}>
+          <MenuOutlined />
+          <a>分类</a>
+        </Space>
+        <Space className={styles.menu}>
+          <GithubOutlined />
+          <a href="https://github.com/wsGolden" target="_blank">
+            源代码
+          </a>
+        </Space>
       </Space>
     </div>
   );

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import {
   AppstoreOutlined,
-  MailOutlined,
+  HighlightOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
@@ -28,9 +28,9 @@ const Header = () => {
       label: <Link href="/users">用户</Link>,
     },
     {
-      key: "/about",
-      icon: <AppstoreOutlined />,
-      label: <Link href="/about">2048</Link>,
+      key: "/article",
+      icon: <HighlightOutlined />,
+      label: <Link href="/article">文章</Link>,
     },
   ];
   const [current, setCurrent] = useState(pathname);
