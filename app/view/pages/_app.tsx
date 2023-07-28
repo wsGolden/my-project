@@ -12,7 +12,6 @@ function MyApp({ Component, pageProps }: Iprops) {
   const router = useRouter();
   // 根据不同路由返回对应的title
   const getPageTitle = (url) => {
-    console.log(url, 12312);
     switch (url) {
       case "/users":
         return "用户";
@@ -22,6 +21,8 @@ function MyApp({ Component, pageProps }: Iprops) {
         return "文章详情";
       case "/news":
         return "每日早报";
+      case "/editarticle":
+        return "写短文";
       default:
         return "首页";
     }

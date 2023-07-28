@@ -1,5 +1,5 @@
 import { ReactNode, useState } from "react";
-import { Table, Form, Input, Button, message, Tooltip } from "antd";
+import { Table, Form, Input, Button, message, Tooltip, Modal } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import moment from "moment";
 import useAjaxTable from "../../hooks/useAjaxTable";
@@ -82,11 +82,18 @@ export default function Article() {
     },
   ];
   const handleDelete = async (_id: string) => {
-    const { flag } = await removeArticle({ _id });
-    if (flag === 1) {
-      message.success("删除成功");
-      submit({ ...searchData });
-    }
+    Modal.confirm({
+      title: "确认删除吗?",
+      okText: '确认',
+      cancelText: '取消',
+      onOk: async () => {
+        const { flag } = await removeArticle({ _id });
+        if (flag === 1) {
+          message.success("删除成功");
+          submit({ ...searchData });
+        }
+      },
+    });
   };
 
   const handleEdit = (_id: string) => {
