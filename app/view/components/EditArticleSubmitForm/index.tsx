@@ -14,10 +14,6 @@ interface Iprops {
   content?: string;
 }
 
-const uploadAction =
-  process.env.NODE_ENV === "development"
-    ? "http://127.0.0.1:7001"
-    : "http://123.57.88.38:7001";
 const EditArticleSubmitForm = ({
   onSubmit,
   onCancel,
@@ -133,7 +129,7 @@ const EditArticleSubmitForm = ({
             accept=".jpg, .gif, .bmp, .png, .jpeg, .png, .webp"
             listType="picture"
             onRemove={onRemove}
-            action={`${uploadAction}/api/file/upload?imageId=${recordId}`}
+            action={`${process.env.serviceBaseUrl}/api/file/upload?imageId=${recordId}`}
             maxCount={1}
           >
             <Button icon={<UploadOutlined />}>选择图片</Button>
