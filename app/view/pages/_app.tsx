@@ -9,7 +9,6 @@ interface Iprops {
 }
 
 function MyApp({ Component, pageProps }: Iprops) {
-  console.log(process.env,process.env.serviceBaseUrl, process.env.serverUrl, 2313)
   const [title, setTitle] = useState("😄Anyway Blob");
   const router = useRouter();
   // 根据不同路由返回对应的title
