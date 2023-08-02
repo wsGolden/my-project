@@ -7,12 +7,12 @@ interface Iprops {
   Component: any;
   pageProps: any;
 }
+
 function MyApp({ Component, pageProps }: Iprops) {
   const [title, setTitle] = useState("😄Anyway Blob");
   const router = useRouter();
   // 根据不同路由返回对应的title
   const getPageTitle = (url) => {
-    console.log(url, 12312);
     switch (url) {
       case "/users":
         return "用户";
@@ -22,6 +22,8 @@ function MyApp({ Component, pageProps }: Iprops) {
         return "文章详情";
       case "/news":
         return "每日早报";
+      case "/editarticle":
+        return "写短文";
       default:
         return "首页";
     }
@@ -57,7 +59,7 @@ function MyApp({ Component, pageProps }: Iprops) {
   return (
     <>
       <Head>
-        <link rel="icon" href="http://localhost:3000/favicon.ico" />
+      <link rel="icon" href={`${process.env.serverUrl}:3000/favicon.ico`} />
         <title>{title}</title>
       </Head>
       <Component {...pageProps} />

@@ -1,14 +1,12 @@
-import { ReactNode, useState } from "react";
-import { Table, Form, Input, Button, message, Tooltip } from "antd";
+import { useState } from "react";
+import Link from "next/link";
+import { Table, Form, Input, Button, message, Tooltip, Modal } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import moment from "moment";
 import useAjaxTable from "../../hooks/useAjaxTable";
-import EditModal from "@/components/EditArticleSubmitForm";
-
 import { removeArticle } from "../../services/article/api";
 import Header from "@/components/ConfigPageHeader";
 import styles from "./index.module.scss";
-import Link from "next/link";
 
 interface DataType {
   _id: string;
@@ -82,16 +80,18 @@ export default function Article() {
     },
   ];
   const handleDelete = async (_id: string) => {
-    const { flag } = await removeArticle({ _id });
-    if (flag === 1) {
-      message.success("删除成功");
-      submit({ ...searchData });
-    }
-  };
-
-  const handleEdit = (_id: string) => {
-    setVisible(true);
-    setRecordId(_id);
+    Modal.confirm({
+      title: "确认删除吗?",
+      okText: "确认",
+      cancelText: "取消",
+      onOk: async () => {
+        const { flag } = await removeArticle({ _id });
+        if (flag === 1) {
+          message.success("删除成功");
+          submit({ ...searchData });
+        }
+      },
+    });
   };
 
   const handleSearch = (values) => {
@@ -99,10 +99,7 @@ export default function Article() {
       submit(values);
     });
   };
-  const handleAdd = () => {
-    setVisible(true);
-    setRecordId("");
-  };
+
   return (
     <div>
       <Header />
@@ -127,17 +124,12 @@ export default function Article() {
         <Button htmlType="reset" style={{ marginRight: 10 }}>
           清除
         </Button>
-        <Button type="primary" onClick={() => handleAdd()}>
-          新增
-        </Button>
+        <Link href="/editarticle" style={{ marginLeft: 10 }}>
+          <Button type="primary">
+            新增
+          </Button>
+        </Link>
       </Form>
-      {visible && (
-        <EditModal
-          recordId={recordId}
-          onSubmit={() => submit({ ...searchData })}
-          onCancel={() => setVisible(false)}
-        />
-      )}
       <Table rowKey="_id" columns={columns} {...tableProps} />
     </div>
   );
