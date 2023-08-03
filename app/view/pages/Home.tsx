@@ -12,13 +12,13 @@ import styles from "./home.module.scss";
 
 const { Meta } = Card;
 
-export default function Home() {
+export default function Home({pageConfig}) {
   return (
     <div className="home">
       <Layout>
         <div>
           <div className={styles.person}></div>
-          <Alert message="🎉🎉🎉新功能：富文本编辑，快来体验一下～" closable={true} />
+          <Alert message={pageConfig?.notice} closable={true} />
           <div className={styles.pic}>
             <Study width="384" height="384" />
           </div>

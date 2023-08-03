@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Link from "next/link";
 import { Table, Form, Input, Button, message, Tooltip, Modal } from "antd";
 import type { ColumnsType } from "antd/es/table";
@@ -15,10 +14,8 @@ interface DataType {
   articleTitle: string;
 }
 
-export default function Article() {
+export default function Article({pageConfig}) {
   const [form] = Form.useForm();
-  const [visible, setVisible] = useState(false);
-  const [recordId, setRecordId] = useState("");
   const { tableProps, submit, searchData } = useAjaxTable("/api/article/list");
   const columns: ColumnsType<DataType> = [
     {

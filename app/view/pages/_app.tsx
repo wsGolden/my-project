@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-// import '@/common/css/index.module.scss';
-// import '../styles/global.scss'
+import { getConfig } from "../services";
+import App from 'next/app';
 interface Iprops {
   Component: any;
   pageProps: any;
@@ -10,6 +10,8 @@ interface Iprops {
 
 function MyApp({ Component, pageProps }: Iprops) {
   const [title, setTitle] = useState("😄Anyway Blob");
+  const [pageConfig, setPageConfig] = useState({});
+
   const router = useRouter();
   // 根据不同路由返回对应的title
   const getPageTitle = (url) => {
@@ -56,13 +58,22 @@ function MyApp({ Component, pageProps }: Iprops) {
       router.events.off("routeChangeComplete", handleRouteChange);
     };
   }, []);
+  useEffect(() => {
+    const getConfigFn = async () => {
+      const { flag, data = {} } = await getConfig();
+      if (flag === 1) {
+        setPageConfig(data);
+      }
+    };
+    getConfigFn();
+  }, []);
   return (
     <>
       <Head>
-      <link rel="icon" href={`${process.env.serverUrl}:3000/favicon.ico`} />
+        <link rel="icon" href={`${process.env.serverUrl}:3000/favicon.ico`} />
         <title>{title}</title>
       </Head>
-      <Component {...pageProps} />
+      <Component {...pageProps} pageConfig={pageConfig} />
     </>
   );
 }
