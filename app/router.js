@@ -20,4 +20,7 @@ module.exports = app => {
 
   router.post('/api/file/upload', controller.api.file.upload);
   router.get('/upload/:filename', controller.api.file.show);
+
+  // 配置
+  router.post('/api/getconfig', controller.api.config.getConfig);
 };

@@ -40,8 +40,8 @@ class CrudListController extends Controller {
       }
       const result = new app.model.Article({ ...ctx.request.body });
 
-      const userInfo = await result.save();
-      ctx.body = ctx.helper.jsonResult.success(userInfo);
+      const articleInfo = await result.save();
+      ctx.body = ctx.helper.jsonResult.success(articleInfo);
     } catch (err) {
 
       ctx.body = ctx.helper.jsonResult.error(err, 5000);

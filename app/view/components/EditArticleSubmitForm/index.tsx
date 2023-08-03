@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal, Form, Input, Upload, Button } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { getImage, getImageIds } from "@/common/utils";
+import { useRouter } from "next/router";
 import {
   addArticle,
   updateArticle,
@@ -22,7 +23,7 @@ const EditArticleSubmitForm = ({
 }: Iprops) => {
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState([]);
-
+  const router = useRouter();
   useEffect(() => {
     const editUserFn = async () => {
       if (recordId) {
@@ -68,16 +69,16 @@ const EditArticleSubmitForm = ({
       });
       if (flag === 1) {
         onSubmit();
-
         handleCancel();
+        router.push("/");
       }
       return;
     }
     const { flag } = await addArticle(formValues);
     if (flag === 1) {
       onSubmit();
-
       handleCancel();
+      router.push("/");
     }
   };
   const handleCancel = () => {
