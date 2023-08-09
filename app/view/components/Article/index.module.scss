@@ -1,0 +1,28 @@
+.imagecontainer {
+  width: 200px; /* 设置容器的宽度 */
+  height: 150px; /* 设置容器的高度 */
+  // border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+.imagecontainer img {
+  max-width: 100%; /* 限制图像的最大宽度为容器宽度 */
+  max-height: 100%; /* 限制图像的最大高度为容器高度 */
+}
+.articlelistitem {
+  height: 200px;
+}
+.articlecontent {
+max-height: 50px;
+}
+.articlelink {
+  margin-top: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* 鼠标悬停时的阴影效果 */
+  transition: box-shadow 0.3s ease; /* 添加过渡效果 */
+}
+.articlelink:hover  {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* 鼠标悬停时的阴影效果 */
+}
