@@ -29,7 +29,7 @@ module.exports = withTM({
     ...env[currentEnv],
     currentEnv
   },
-  
+
   webpack: (config, options) => {
     config.module.rules.push({
       test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
@@ -43,5 +43,14 @@ module.exports = withTM({
       use: ['@svgr/webpack'],
     });
     return config
+  },
+  images: {
+    domains: ['123.57.88.38', 'localhost', '127.0.0.1'],
+  },
+  publicRuntimeConfig: {
+    BaseUrl:
+      process.env.NODE_ENV === "development"
+        ? "http://127.0.0.1:7001"
+        : "http://123.57.88.38:7001"
   }
 })
