@@ -1,17 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Card, Row, Col, List, Avatar, Space } from "antd";
-import { LikeOutlined, MessageOutlined, StarOutlined } from "@ant-design/icons";
-import { getArticleList } from "./services";
-
-import styles from "./index.module.scss";
+import { Card,  List, Avatar, Space } from "antd";
 import Link from "next/link";
-const BaseUrl =
-  process.env.NODE_ENV === "development"
-    ? "http://127.0.0.1:7001"
-    : "http://123.57.88.38:7001";
+import Image from "next/image";
+import getConfig from 'next/config';
+import { getArticleList } from "./services";
+import styles from "./index.module.scss";
+
 const { Meta } = Card;
 
 export default function Article() {
+  const { publicRuntimeConfig } = getConfig();
   const [articleList, setArticleList] = useState([]);
   useEffect(() => {
     const getArticle = async () => {
@@ -42,11 +40,11 @@ export default function Article() {
               className={styles.articlelistitem}
               extra={
                 <div className={styles.imagecontainer}>
-                  <img
-                    // // width={300}
-                    // height={300}
+                  <Image
+                    width={300}
+                    height={300}
                     alt="logo"
-                    src={`${BaseUrl}/upload/${item.articlePicId}`}
+                    src={`${publicRuntimeConfig.BaseUrl}/upload/${item.articlePicId}`}
                   />
                 </div>
               }
@@ -70,7 +68,7 @@ export default function Article() {
             >
               <List.Item.Meta
                 avatar={
-                  <Avatar src={`${BaseUrl}/upload/${item.articlePicId}`} />
+                  <Avatar src={`${publicRuntimeConfig.BaseUrl}/upload/${item.articlePicId}`} />
                 }
                 title={item.articleTitle}
                 description={item.articleDes}
@@ -84,30 +82,5 @@ export default function Article() {
         </div>
       )}
     />
-    // <Row>
-    //   {articleList.map((data, index) => (
-    //     <Col
-    //       span={8}
-    //       key={index}
-    //       style={{ marginTop: 20 }}
-    //       className="card-item"
-    //     >
-    //       <Link href={`/articledetail?articleId=${data._id}`} target="_blank">
-    //         <Card
-    //           hoverable
-    //           style={{ width: 300 }}
-    //           cover={
-    //             <img
-    //               alt="example"
-    //               src={`${BaseUrl}/upload/${data.articlePicId}`}
-    //             />
-    //           }
-    //         >
-    //           <Meta title={data.articleTitle} description={data.articleDes} />
-    //         </Card>
-    //       </Link>
-    //     </Col>
-    //   ))}
-    // </Row>
   );
 }

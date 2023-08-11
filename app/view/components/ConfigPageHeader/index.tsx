@@ -3,13 +3,10 @@ import Link from "next/link";
 import {
   AppstoreOutlined,
   HighlightOutlined,
-  SettingOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import { useRouter } from "next/router";
-
-import styles from "./index.module.scss";
 
 const Header = () => {
   const router = useRouter();

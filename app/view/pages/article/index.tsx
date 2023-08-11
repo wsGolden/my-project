@@ -2,9 +2,9 @@ import Link from "next/link";
 import { Table, Form, Input, Button, message, Tooltip, Modal } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import moment from "moment";
-import useAjaxTable from "../../hooks/useAjaxTable";
-import { removeArticle } from "../../services/article/api";
 import Header from "@/components/ConfigPageHeader";
+import useAjaxTable from "@/hooks/useAjaxTable";
+import { removeArticle } from "@/services/article/api";
 import styles from "./index.module.scss";
 
 interface DataType {

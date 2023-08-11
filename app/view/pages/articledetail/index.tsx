@@ -4,11 +4,14 @@ import axios, { axiosPost } from "@/common/utils/axios";
 import { Parser } from "html-to-react";
 import { Space } from "antd";
 import moment from "moment";
-
+import Image from "next/image";
+import Link from "next/link";
+import getPublicConfig from "next/config";
 import { getSearchParam } from "@/common/utils";
 import Layout from "@/components/Layout";
 import styles from "./home.module.scss";
-import Link from "next/link";
+const { publicRuntimeConfig } = getPublicConfig();
+
 interface ArticleDataVo {
   articleContent: string;
   articleDes: string;
@@ -67,17 +70,20 @@ function ArticleDetail() {
         <div>创建时间：{formattedCreateTime}</div>
         <div>更新时间：{formattedUpdateTime}</div>
       </Space>
-
+      <div style={{display: 'flex', justifyContent: 'center'}}>
+        <Image
+          width={300}
+          height={300}
+          alt="pic"
+          src={`${publicRuntimeConfig.BaseUrl}/upload/${data.articlePicId}`}
+        />
+      </div>
       <div className={styles.block}>
         <p>
           <strong>{data.articleDes}</strong>
         </p>
       </div>
       <HtmlComponent />
-      {/* <div
-        dangerouslySetInnerHTML={{ __html: data.articleContent }}
-        className={`${styles.block} ${styles.contentblock}`}
-      /> */}
     </Layout>
   );
 }
