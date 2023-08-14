@@ -19,6 +19,7 @@ module.exports = app => {
   router.post('/api/article/update', controller.api.article.update);
 
   router.post('/api/file/upload', controller.api.file.upload);
+  router.post('/api/file/uploadimage', controller.api.file.uploadImage);
   router.get('/upload/:filename', controller.api.file.show);
 
   // 配置

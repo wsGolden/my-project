@@ -4,9 +4,11 @@ import axios, { axiosPost } from "@/common/utils/axios";
 import { Editor, Toolbar } from "@wangeditor/editor-for-react";
 import { IDomEditor, IEditorConfig, IToolbarConfig } from "@wangeditor/editor";
 import { getSearchParam } from "@/common/utils";
+import getConfig from "next/config";
 import "@wangeditor/editor/dist/css/style.css"; // 引入 css
 
 function MyEditor({ getHtml }) {
+  const { publicRuntimeConfig } = getConfig();
   // editor 实例
   const [editor, setEditor] = useState<IDomEditor | null>(null);
   // const [editor, setEditor] = useState(null)
@@ -34,7 +36,20 @@ function MyEditor({ getHtml }) {
   // 编辑器配置
   const editorConfig: Partial<IEditorConfig> = {
     placeholder: "请输入内容...",
+    MENU_CONF: {
+      uploadImage: {
+        server: `${publicRuntimeConfig.BaseUrl}/api/file/uploadimage`,
+        fieldName: "file",
+      },
+      insertImage: {
+        parseImageSrc: customParseImageSrc,
+      },
+    },
   };
+  // 转换图片链接
+  function customParseImageSrc(src: string): string {
+    return `${publicRuntimeConfig.BaseUrl}/upload/${src}`;
+  }
 
   // 及时销毁 editor ，重要！
   useEffect(() => {

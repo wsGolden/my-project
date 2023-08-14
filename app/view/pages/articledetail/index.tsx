@@ -71,9 +71,7 @@ function ArticleDetail() {
         <div>更新时间：{formattedUpdateTime}</div>
       </Space>
       <div style={{display: 'flex', justifyContent: 'center'}}>
-        <Image
-          width={300}
-          height={300}
+        <img
           alt="pic"
           src={`${publicRuntimeConfig.BaseUrl}/upload/${data.articlePicId}`}
         />
