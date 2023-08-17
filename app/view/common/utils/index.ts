@@ -2,7 +2,7 @@
 export const BaseUrl =
   process.env.NODE_ENV === "development"
     ? "http://127.0.0.1:7001"
-    : "http://123.57.88.38:7001";
+    : "http://101.43.185.170:7001";
 /**
  * 获取参数
  */
