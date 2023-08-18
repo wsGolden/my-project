@@ -11,9 +11,9 @@ const env = {
     serviceBaseUrl: 'http://127.0.0.1:7001',
   },
   production: {
-    serverUrl: 'http://101.43.185.170',
-    serverServiceBaseUrl: 'http://101.43.185.170:7001',
-    serviceBaseUrl: 'http://101.43.185.170:7001' // 域名
+    serverUrl: 'http://wsqa.cn',
+    serverServiceBaseUrl: 'http://wsqa.cn:7001',
+    serviceBaseUrl: 'http://wsqa.cn:7001' // 域名
   }
 };
 const currentEnv = !isProd
@@ -45,12 +45,12 @@ module.exports = withTM({
     return config
   },
   images: {
-    domains: ['101.43.185.170', 'localhost', '127.0.0.1'],
+    domains: ['wsqa.cn', 'localhost', '127.0.0.1'],
   },
   publicRuntimeConfig: {
     BaseUrl:
       process.env.NODE_ENV === "development"
         ? "http://127.0.0.1:7001"
-        : "http://101.43.185.170:7001"
+        : "http://wsqa.cn:7001"
   }
 })
